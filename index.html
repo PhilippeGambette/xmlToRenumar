@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=800, initial-scale=1.0">
+    <title>XML-TEI Wikidata Geocoder</title>
+    <link rel="icon" type="image/png" href="wd-geocoder.png" />
+    <!-- Leaflet import start here -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <!-- Leaflet import end here -->
+    <style>
+        body {
+            font-family: 'Calibri', "Gill Sans", sans-serif;
+            ;
+        }
+
+        div[type="entree"]{
+            margin-bottom:0.5em;
+        }
+
+        .clickable {
+            cursor: pointer
+        }
+
+        date{
+            background-color:antiquewhite;
+        }
+
+        placeName{
+            background-color:darkseagreen;
+        }
+
+        persName{
+            background-color: sandybrown;
+        }
+
+        #source {
+            width: 100%;
+            height: 200px;
+        }
+
+        .cache {
+            display: none;
+        }
+
+        .leaflet-popup-content img {
+            height: 200px;
+        }
+
+        #galleryDiv img {
+            height: 200px;
+        }
+
+        #map {
+            height: 1000px;
+            width: 100%;
+        }
+
+        a.tooltip img {
+            height: 200px;
+        }
+
+        a.tooltip em {
+            display: none;
+        }
+
+        a.tooltip:hover {
+            border: 0;
+            position: relative;
+            z-index: 500;
+            text-decoration: none;
+        }
+
+        a.tooltip:hover em {
+            font-style: normal;
+            display: block;
+            position: absolute;
+            top: 20px;
+            left: -10px;
+            padding: 5px;
+            color: #000;
+            border: 1px solid #bbb;
+            background: #ffc;
+        }
+
+        a.tooltip:hover em span {
+            position: absolute;
+            top: -7px;
+            left: 15px;
+            height: 7px;
+            width: 11px;
+            background: transparent url(image-infobulle.gif);
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1><img src="wd-geocoder.png" style="height:100px;margin-bottom:-20px;">XML-TEI Wikidata Geocoder</h1>
+    <p>
+        Cette page propose d'extraire du code d'un fichier XML-TEI diverses informations sur les éléments persName et placeName, 
+        à partir de leur attribut ref si ce dernier contient un identifiant Geonames précédé de "geo:", un identifiant Wikidata précédé de "wdt:", un identifiant idref précédé de "idref:" ou un identifiant VIAF précédé de "viaf:" :
+        coordonnées géographiques (afin de générer une carte), illustrations (afin de générer une galerie d'images).
+        Le code source de cette page est mis à disposition dans <a
+            href="https://github.com/PhilippeGambette/xmlToRenumar">ce dépôt GitHub</a>.
+    </p>
+    <p>
+        Merci de coller ci-dessous le code XML-TEI du fichier que vous souhaitez géocoder :
+    </p>
+    <img src="loading_icon.gif" id="preloader">
+    <textarea id="source" class="cache">
+</textarea>
+    <br>
+    <input class="cache" id="geocoder" type="button" value="Géocoder ce texte !">
+    <br>
+    <main>
+    </main>
+    <div class="cache" id="sourceHtml"></div>
+    <div id="mapDiv" class="cache">
+        <h2>Carte</h2>
+        <div id="map"></div>
+    </div>
+    <div id="galleryDiv" class="cache">
+        <h2>Galerie</h2>
+    </div>
+    <div id="textDiv" class="cache">
+        <h2>Texte</h2>
+    </div>
+    <footer>
+        <h2>Crédits</h2>
+        <p>Code de cette page : <a href="http://igm.univ-mlv.fr/~gambette">Philippe Gambette</a></p>
+        <p>Visuel d'attente : <a href="https://commons.wikimedia.org/wiki/User:Ahm_masum">Ahm masum</a> (<a
+                href="https://commons.wikimedia.org/wiki/File:Loading_icon.gif">Wikimedia Commons</a>, CC BY-SA 4.0)</p>
+    </footer>
+</body>
+<script>
+
+    //=================================================
+    //Code in the block below from https://stackoverflow.com/questions/45309447/calculating-median-javascript
+    function median(numbers) {
+        const sorted = numbers.slice().sort((a, b) => a - b);
+        const middle = Math.floor(sorted.length / 2);
+
+        if (sorted.length % 2 === 0) {
+            return (sorted[middle - 1] + sorted[middle]) / 2;
+        }
+
+        return sorted[middle];
+    }
+    //=================================================
+
+
+
+
+    //=================================================
+    //Get the wikidata ids from the geonames ids
+    function buildMapAndGallery(wikidata) {
+        let pages = ""
+        Object.keys(wikidata).forEach(page => {
+            //pages += `"${page}"@fr\n`;
+            pages += `<http://www.wikidata.org/entity/${page}>\n`
+        })
+        console.log(pages)
+
+        let sparqlQuery = `#Informations correspondant aux identifiants wikidata
+SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
+  VALUES ?item {
+      ${pages}
+  }
+  ?sitelink schema:about ?item;
+    schema:isPartOf <https://fr.wikipedia.org/>;
+    schema:name ?lemma.
+  OPTIONAL { ?item wdt:P18 ?picture. }
+  OPTIONAL { ?item wdt:P625 ?coordinates. }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en,it,de,nl". }
+}`;
+        console.log("query with Wikidata Ids");
+        console.log(sparqlQuery);
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        queryDispatcher.query(sparqlQuery).then(data => {
+            //console.log(data.results.bindings);
+
+            // Map creation
+            document.querySelector("#mapDiv").classList.remove("cache");
+            let markers = [];
+            let latitude = [];
+            let longitude = [];
+
+            // Gallery creation
+            document.querySelector("#galleryDiv").classList.remove("cache");
+            document.querySelector("#galleryDiv").innerHTML = "<h2>Gallerie</h2>"
+
+            // Get wikidata info corresponding to geonames links
+            data.results.bindings.forEach(result => {
+                //console.log(result)
+                // if the wikidata element has a picture, save its infos for later
+                if (result.picture != undefined) {
+                    let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
+                    if (!(wikidataId in wikidata)) {
+                        wikidata[wikidataId] = {};
+                        console.log("ok" + wikidataId)
+                    }
+                    //console.log(wikidata)
+                    //console.log(wikidataId)
+                    //console.log(wikidata[wikidataId])
+                    wikidata[wikidataId].image = result.picture.value;
+                    wikidata[wikidataId].wikipedia = result.lemma.value;
+                    //wikipedia[result.lemma.value].wikidata = wikidataId;
+                }
+                if (result.coordinates == null) {
+                    if (result.picture != null) {
+                        document.querySelector("#galleryDiv").appendChild(document.createElement("a"));
+                        document.querySelector("#galleryDiv").lastElementChild.appendChild(document.createElement("img"));
+                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("href", "http://fr.wikipedia.org/wiki/" + result.lemma.value);
+                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("target", "_blank");
+                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("title", result.itemLabel.value);
+                        document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("src", result.picture.value);
+                        document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("alt", result.itemLabel.value);
+                    }
+                } else {
+                    // Extract coordinates
+                    console.log(result.coordinates.value);
+                    let coord = /Point\(([-]*[0-9]*[.][0-9]*) ([-]*[0-9]*[.][0-9]*)\)/i.exec(result.coordinates.value)
+
+                    if ("picture" in result) {
+                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value, result.picture.value]);
+                    } else {
+                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
+                    }
+
+                    longitude.push(parseFloat(coord[1]));
+                    latitude.push(parseFloat(coord[2]));
+
+                }
+            })
+            // End of wikidata result processing
+
+            // Add tooltips to the text
+            document.querySelectorAll("persName").forEach(e => {
+                let title = e.getAttribute("title");
+                if (title != null && title[1] == ":") {
+                    let name = title.substring(2);
+                    // Link to a Wikipedia page
+                    if (title[0] == "w") {
+                        if ((name in wikipedia) && (wikipedia[name].wikidata in wikidata)) {
+                            e.setAttribute("class", "tooltip");
+                            e.innerHTML = e.innerHTML + `<em><span></span><b>${name}</b><br><img src="${wikidata[wikipedia[name].wikidata].image}" alt="${name}"></em>`;
+                        }
+                    }
+                }
+            });
+
+            // Code in the block below from https://leafletjs.com/
+            var map = L.map('map').setView([median(latitude), median(longitude)], 10);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            markers.forEach(m => {
+                //console.log(m)
+                let image = "";
+                if (m.length > 3) {
+                    image = `<img src="${m[3]}" alt="Image">`;
+                }
+                L.marker([m[1], m[0]]).addTo(map)
+                    .bindPopup(`<h3>${m[2]}</h3>${image}`);
+            })
+
+            // Display the text
+            document.querySelector("#textDiv").classList.remove("cache");
+            let texte = document.querySelector("text").innerHTML;
+
+            document.querySelector("#sourceHtml").remove();
+            document.querySelector("#textDiv").innerHTML = "<h2>Texte</h2>" + texte.replace(/"\/wiki/gi, "http://fr.wikisource.org/wiki").replace(/src="\/\/upload.wikimedia.org/gi, 'src="https://upload.wikimedia.org');
+            document.querySelectorAll("orig").forEach(e=>{e.remove();})
+            document.querySelectorAll("date").forEach(e=>{e.setAttribute("title",e.getAttribute("when"));})
+
+        });
+
+
+    }
+    //=================================================
+
+
+
+    //=================================================
+    //Get the wikidata ids from the viaf ids
+    function viafToWikidata(viaf, wikidata) {
+        let pages = ""
+        Object.keys(viaf).forEach(page => {
+            pages += '"' + page + '"\n';
+        })
+        console.log(pages)
+        let sparqlQuery = `#Éléments Wikidata correspondant aux identifiants viaf
+SELECT ?viaf ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
+  VALUES ?viaf {
+      ${pages}
+  }
+  ?item wdt:P214 ?viaf.
+}`;
+        console.log("query with viaf Ids");
+        console.log(sparqlQuery);
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        queryDispatcher.query(sparqlQuery).then(data => {
+            console.log(data.results.bindings);
+            data.results.bindings.forEach(result => {
+                let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
+                wikidata[wikidataId] = {}
+                //console.log(wikidataId)
+            })
+
+
+            document.querySelectorAll("persName").forEach(e => {
+                let title = e.getAttribute("ref");
+                if (title != null && title.replace(":", "").length < title.length) {
+                    let name = title.substring(title.indexOf(":") + 1);
+                    console.log(title.substring(0, title.indexOf(":") + 1))
+                    // Link to a wikidata element
+                    if (title.substring(0, title.indexOf(":")) == "wdt" && !(name in wikidata)) {
+                        wikidata[name] = {};
+                        //console.log(name)
+                    }
+                }
+            });
+            console.log("List of Wikidata ids to search");
+            console.log(wikidata);
+            buildMapAndGallery(wikidata)
+        });
+        //console.log(wikidata);
+    }
+    //=================================================
+
+
+
+
+    //=================================================
+    //Get the wikidata ids from the idref ids
+    function idrefToWikidata(idref, wikidata) {
+        let pages = ""
+        Object.keys(idref).forEach(page => {
+            pages += '"' + page + '"\n';
+        })
+        console.log(pages)
+        let sparqlQuery = `#Éléments Wikidata correspondant aux identifiants idref
+SELECT ?idref ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
+  VALUES ?idref {
+      ${pages}
+  }
+  ?item wdt:P269 ?idref.
+}`;
+        console.log("query with idref Ids");
+        console.log(sparqlQuery);
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        queryDispatcher.query(sparqlQuery).then(data => {
+            console.log(data.results.bindings);
+            data.results.bindings.forEach(result => {
+                let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
+                wikidata[wikidataId] = {}
+                //console.log(wikidataId)
+            })
+
+            let viaf={};
+            document.querySelectorAll("persName").forEach(e => {
+                let title = e.getAttribute("ref");
+                if (title != null && title.replace(":", "").length < title.length) {
+                    let name = title.substring(title.indexOf(":") + 1);
+                    console.log(title.substring(0, title.indexOf(":") + 1))
+                    // Link to a viaf element
+                    if (title.substring(0, title.indexOf(":")) == "viaf" && !(name in viaf)) {
+                        viaf[name] = {};
+                        //console.log(name)
+                    }
+                }
+            });
+            // Get wikidata elements from viaf ids
+            viafToWikidata(viaf, wikidata)
+        });
+        //console.log(wikidata);
+    }
+    //=================================================
+
+
+
+    //=================================================
+    //Get the wikidata ids from the geonames ids
+    function geonamesToWikidata(geonames, wikidata) {
+        let pages = ""
+        Object.keys(geonames).forEach(page => {
+            pages += '"' + page + '"\n';
+        })
+        console.log(pages)
+        let sparqlQuery = `#Éléments Wikidata correspondant aux identifiants geonames
+SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
+  VALUES ?geonames {
+      ${pages}
+  }
+  ?item wdt:P1566 ?geonames.
+}`;
+        console.log("query with geonames Ids");
+        console.log(sparqlQuery);
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        queryDispatcher.query(sparqlQuery).then(data => {
+            console.log(data.results.bindings);
+            data.results.bindings.forEach(result => {
+                let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
+                wikidata[wikidataId] = {}
+                //console.log(wikidataId)
+            })
+
+            let idref={};
+            document.querySelectorAll("persName").forEach(e => {
+                let title = e.getAttribute("ref");
+                if (title != null && title.replace(":", "").length < title.length) {
+                    let name = title.substring(title.indexOf(":") + 1);
+                    console.log(title.substring(0, title.indexOf(":") + 1))
+                    // Link to a idref element
+                    if (title.substring(0, title.indexOf(":")) == "idref" && !(name in idref)) {
+                        idref[name] = {};
+                        //console.log(name)
+                    }
+                }
+            });
+
+            // Get wikidata elements from idref ids
+            idrefToWikidata(idref, wikidata)
+        });
+        //console.log(wikidata);
+    }
+    //=================================================
+
+    //=================================================
+    //Code in the block below from https://query.wikidata.org/
+    class SPARQLQueryDispatcher {
+        constructor(endpoint) {
+            this.endpoint = endpoint;
+        }
+
+        query(sparqlQuery) {
+            const fullUrl = this.endpoint + '?query=' + encodeURIComponent(sparqlQuery);
+            const headers = { 'Accept': 'application/sparql-results+json' };
+
+            return fetch(fullUrl, { headers }).then(body => body.json());
+        }
+    }
+
+    const endpointUrl = 'https://query.wikidata.org/sparql';
+    //=================================================
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#preloader").classList.add("cache");
+        document.querySelector("#source").classList.remove("cache");
+        document.querySelector("#geocoder").classList.remove("cache");
+        document.querySelector("#geocoder").addEventListener("click", e => {
+
+            document.querySelector("#sourceHtml").innerHTML = document.querySelector("#source").value.replace(/<head/g,"<h4").replace(/<\/head>/g,"</h4>").replace(/<titlePart/g,"<h3").replace(/<\/titlePart>/g,"</h3>");
+            var geonames = {};
+            var wikipedia = {};
+
+            // Get all links to Wikipedia or geonames pages
+            // => have a : in second position
+            document.querySelectorAll("placeName").forEach(e => {
+                let title = e.getAttribute("ref");
+                if (title != null && title.replace(":", "").length < title.length) {
+                    let name = title.substring(title.indexOf(":") + 1);
+                    console.log(title.substring(0, title.indexOf(":") + 1))
+                    // Link to a geonames element
+                    if (title.substring(0, title.indexOf(":")) == "geo" && !(name in geonames)) {
+                        geonames[name] = {};
+                        console.log(name)
+                    }
+                }
+            });
+
+
+            // Get wikidata elements from geonames ids
+            geonamesToWikidata(geonames, {})
+
+        });
+    });
+</script>
+
+</html>
