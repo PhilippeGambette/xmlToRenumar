@@ -132,7 +132,8 @@ for line in inputText:
          paragraphs.append(currentParagraph)
       currentParagraph = res.group(2)
       numParagraph += 1
-   currentParagraph += line
+   else:
+      currentParagraph += line
 inputText.close()
 
 paragraphs.append(currentParagraph)
@@ -176,7 +177,7 @@ for paragraph in paragraphs:
       "#nomPrenomNotaire_1": "Marguerite de Navarre",
       "#villeNotaire": "", 
       "#statutEdition_1": "Première édition",
-      "#commentaireEdition_1": "Hector de La Ferrière-Percy Aubry, Marguerite d’Angoulême (sœur de Francois I.), son livre de dépenses (1540-1549), étude sur ses dernières années, 1862",
+      "#commentaireEdition_1": "Hector de La Ferrière-Percy Aubry, <hi rend=\"italic\">Marguerite d’Angoulême (sœur de Francois I.), son livre de dépenses (1540-1549), étude sur ses dernières années</hi>, 1862",
       "#prenomResponsableRevision_1": "Nicole",
       "#nomResponsableRevision_1": "Dufournaud",
       "#paragAnalyse": "Version mise au propre du registre des comptes par Jehan de Frotté, « contrerolleur general et secrectaire des finances des Roy et Royne de Navarre », pour le mois " + monthsInFrench[numParagraph] + ".",

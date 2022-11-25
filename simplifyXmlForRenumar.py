@@ -60,6 +60,10 @@ def displayNodeText(node, forbiddenTags, keptTags, parentTag, savingContent, sta
                   # Convert the sup attribute into an exp attribute
                   if attribute == "rend" and tagAttributes[attribute] == "sup":
                      openingTag += ' rend="exp"'
+                  elif attribute == "ref" and tagAttributes[attribute][0:4] == "geo:":
+                     openingTag += ' ref="http://sws.geonames.org/' + tagAttributes[attribute][4:len(tagAttributes[attribute])] + '"'
+                  elif attribute == "type":
+                     pass
                   else:
                      openingTag += " " + attribute + "=" + '"' + tagAttributes[attribute] + '"'
                text += openingTag + ">" + displayNodeText(child, forbiddenTags, keptTags, node.nodeName, savingContent, startingNode) + "</" + child.nodeName + ">"
