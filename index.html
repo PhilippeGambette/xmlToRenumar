@@ -176,9 +176,11 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
   VALUES ?item {
       ${pages}
   }
+  OPTIONAL { 
   ?sitelink schema:about ?item;
     schema:isPartOf <https://fr.wikipedia.org/>;
     schema:name ?lemma.
+  }
   OPTIONAL { ?item wdt:P18 ?picture. }
   OPTIONAL { ?item wdt:P625 ?coordinates. }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en,it,de,nl". }
@@ -201,10 +203,10 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
 
             // Get wikidata info corresponding to geonames links
             data.results.bindings.forEach(result => {
+                let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
                 //console.log(result)
                 // if the wikidata element has a picture, save its infos for later
                 if (result.picture != undefined) {
-                    let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
                     if (!(wikidataId in wikidata)) {
                         wikidata[wikidataId] = {};
                         console.log("ok" + wikidataId)
@@ -213,14 +215,18 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                     //console.log(wikidataId)
                     //console.log(wikidata[wikidataId])
                     wikidata[wikidataId].image = result.picture.value;
-                    wikidata[wikidataId].wikipedia = result.lemma.value;
+                    if("lemma" in result){
+                       wikidata[wikidataId].wikipedia = "http://fr.wikipedia.org/wiki/" + result.lemma.value;
+                    } else {
+                       wikidata[wikidataId].wikipedia = "http://www.wikidata.org/entity/" + wikidataId;
+                    }
                     //wikipedia[result.lemma.value].wikidata = wikidataId;
                 }
                 if (result.coordinates == null) {
                     if (result.picture != null) {
                         document.querySelector("#galleryDiv").appendChild(document.createElement("a"));
                         document.querySelector("#galleryDiv").lastElementChild.appendChild(document.createElement("img"));
-                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("href", "http://fr.wikipedia.org/wiki/" + result.lemma.value);
+                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("href", wikidata[wikidataId].wikipedia);
                         document.querySelector("#galleryDiv").lastElementChild.setAttribute("target", "_blank");
                         document.querySelector("#galleryDiv").lastElementChild.setAttribute("title", result.itemLabel.value);
                         document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("src", result.picture.value);
