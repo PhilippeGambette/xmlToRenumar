@@ -41,6 +41,33 @@
             background-color: sandybrown;
         }
 
+        fw[type="pageNum"]{
+            width:2em;
+            height:2em;
+            padding:0.5em;
+            margin-right:1em;
+            float:left;
+            text-align: center;
+            background-image:url("page.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #textDiv{
+            width:50%;
+            margin:auto;
+            min-width:300px;
+            max-width:1000px;
+        }
+
+        note{
+            float:left;
+            margin-right:20px;
+            width:40%;
+            padding:1em;
+            background-color:lightgray;
+        }
+
         #source {
             width: 100%;
             height: 200px;
@@ -52,6 +79,10 @@
 
         .leaflet-popup-content img {
             height: 200px;
+        }
+
+        #galleryDiv{
+            text-align: center;
         }
 
         #galleryDiv img {
@@ -224,7 +255,7 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                 }
                 if (result.coordinates == null) {
                     if (result.picture != null) {
-                        document.querySelector("#galleryDiv").appendChild(document.createElement("a"));
+                        document.querySelector("#galleryDiv").innerHTML+=" <a></a>";
                         document.querySelector("#galleryDiv").lastElementChild.appendChild(document.createElement("img"));
                         document.querySelector("#galleryDiv").lastElementChild.setAttribute("href", wikidata[wikidataId].wikipedia);
                         document.querySelector("#galleryDiv").lastElementChild.setAttribute("target", "_blank");
