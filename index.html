@@ -145,10 +145,1318 @@
             href="https://github.com/PhilippeGambette/xmlToRenumar">ce dépôt GitHub</a>.
     </p>
     <p>
-        Merci de coller ci-dessous le code XML-TEI du fichier que vous souhaitez géocoder :
+        Merci de coller, dans le cadre ci-dessous, le code XML-TEI du fichier que vous souhaitez géocoder :
     </p>
     <img src="loading_icon.gif" id="preloader">
-    <textarea id="source" class="cache">
+    <textarea id="source" class="cache"><?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="Teinte/teinte.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-stylesheet type="text/xsl" href="Teinte/tei2html.xsl"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="fr">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Itinéraire raisonné de Marguerite de Valois en Gascogne d'après ses livres de comptes (1578-1586). Année 1578</title>
+            <author key="Lauzun, Philippe (1847-1920). Auteur du texte">Lauzun, Philippe (1847-1920)</author>
+            <funder><ref>Université Gustave Eiffel</ref></funder>
+            <respStmt>
+              <persName ref="#ND">Nicole Dufournaud</persName>
+              <resp><date>2022-10-21</date> Repérage des noms de lieux de l'itinéraire</resp>
+              <persName ref="#PG">Philippe Gambette</persName>
+              <resp><date>2022</date> Relecture du texte sur Wikisource ; <date>2023</date> Encodage TEI</resp>
+            </respStmt>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Projet Cité des dames, à partir du texte disponible sur Wikisource (feuille de style issue du projet Teinte principalement développé par Frédéric Glorieux : https://github.com/oeuvres/Teinte)</publisher>
+            <date when="2022"/>
+            <availability status="free">
+               <p>Licence ouverte version 2.0</p>
+            </availability>
+            <availability>
+               <licence target="https://www.etalab.gouv.fr/licence-ouverte-open-licence/"/>
+            </availability>            
+         </publicationStmt>
+         <sourceDesc>
+            <bibl>
+               <author>Lauzun, Philippe (1847-1920). Auteur du texte</author>,
+               <title>Itinéraire raisonné de Marguerite de Valois en Gascogne d'après ses livres de comptes (1578-1586). Année 1578</title>.
+               <date>1902</date>,
+               <publisher>Alphonse Picard (Paris)</publisher>.
+               <idno type="GoogleBooks">https://books.google.com/books?id=DJtPAAAAYAAJ</idno>
+               <idno type="Wikisource">https://fr.wikisource.org/wiki/Itin%C3%A9raire_raisonn%C3%A9_de_Marguerite_de_Valois_en_Gascogne</idno>
+            </bibl>
+         </sourceDesc>
+      </fileDesc>
+      <encodingDesc>
+        <p>Les langues sont encodées selon la norme iso 639-3. Pour les dialectes qui n'ont pas encore
+          de code iso, un code non standard est appliqué sur le modèle "oci-gascon".</p>
+        <projectDesc>
+          <p>BVH : programme Bibliothèques Virtuelles Humanistes</p>
+        </projectDesc>
+        <listPrefixDef>
+          <prefixDef matchPattern="(\d+)" replacementPattern="https://www.geonames.org/$1" ident="geo">
+          <p>Le préfixe "geo" abrège l'URL du référentiel Geonames.</p>
+        </prefixDef>
+          <prefixDef matchPattern="(\d+)" replacementPattern="https://www.idref.fr/$1" ident="idref">
+          <p>Le préfixe "idref" abrège l'URL du référentiel IdRef.</p>
+        </prefixDef>
+          <prefixDef matchPattern="(Q\d+)" replacementPattern="https://www.wikidata.org/wiki/$1" ident="wdt">
+          <p>Le préfixe "wdt" abrège l'URL du référentiel Wikidata.</p>
+        </prefixDef>
+          <prefixDef matchPattern="(\d+)" replacementPattern="https://viaf.org/viaf//$1" ident="viaf">
+          <p>Le préfixe "viaf" abrège l'URL du référentiel Virtual Identifier Authority File.</p>
+        </prefixDef>
+      </listPrefixDef>
+      <editorialDecl>
+        <correction>
+          <p>Les notes de la version Wikisource sont supprimées</p>
+        </correction>
+        <hyphenation>
+          <p>Les césures de fin de ligne sont supprimées tout comme les retours à la ligne, dans la source Wikisource, par rapport à l'édition de 1902.</p>
+        </hyphenation>
+        <normalization>
+          <p><!-- règles de normalisation des graphies et abréviations: transcription dissimilée ou non, désabrégée ou non. --></p>
+        </normalization>
+      </editorialDecl>
+    </encodingDesc><encodingDesc>
+      <p>Les langues sont encodées selon la norme iso 639-3. Pour les dialectes qui n'ont pas encore
+        de code iso, un code non standard est appliqué sur le modèle "oci-gascon".</p>
+      <projectDesc>
+        <p>Cité des dames, créatrices dans la cité</p>
+      </projectDesc>
+      <listPrefixDef>
+        <prefixDef matchPattern="(\d+)" replacementPattern="https://www.geonames.org/$1" ident="geo">
+          <p>Le préfixe "geo" abrège l'URL du référentiel Geonames.</p>
+        </prefixDef>
+        <prefixDef matchPattern="(\d+)" replacementPattern="https://www.idref.fr/$1" ident="idref">
+          <p>Le préfixe "idref" abrège l'URL du référentiel IdRef.</p>
+        </prefixDef>
+        <prefixDef matchPattern="(Q\d+)" replacementPattern="https://www.wikidata.org/wiki/$1" ident="wdt">
+          <p>Le préfixe "wdt" abrège l'URL du référentiel Wikidata.</p>
+        </prefixDef>
+        <prefixDef matchPattern="(\d+)" replacementPattern="https://viaf.org/viaf//$1" ident="viaf">
+          <p>Le préfixe "viaf" abrège l'URL du référentiel Virtual Identifier Authority File.</p>
+        </prefixDef>
+      </listPrefixDef>
+      <editorialDecl>
+        <correction>
+          <p/><!-- errata, interventions éditoriales -->
+        </correction>
+        <hyphenation>
+          <p>La division des mots en fin de ligne respecte l'original.</p>
+        </hyphenation>
+        <normalization>
+          <p><!-- règles de normalisation des graphies et abréviations: transcription dissimilée ou non, désabrégée ou non. --></p>
+        </normalization>
+      </editorialDecl>
+    </encodingDesc>
+      <profileDesc>
+         <creation>
+            <date when="1902">1902</date>
+         </creation>
+         <langUsage>
+            <language ident="fr"/>
+         </langUsage>
+      </profileDesc>
+   </teiHeader>
+<text>
+<head>ANNÉE 1578</head>
+<p>«&#160;Maison de la <persName ref="wdt:Q220845">Royne de Navarre</persName>. — Trésorerie et recepte
+généralle des finances et maison de la <persName ref="wdt:Q220845">Royne de Navarre</persName>. —
+Estat des gaiges des dames, damoiselles, gentilshommes et
+aultres officiers de la <persName ref="wdt:Q220845">Royne de Navarre</persName>, sœur unique du
+Roy, pour l’année commençant le premier jour de Janvier
+et finissant le dernier jour de décembre 1578.
+</p>
+<p>[...]</p>
+<p>«&#160;Dépense des journées payées par ledit sieur Loys Hubault,
+maître de chambre aux deniers de la <persName ref="wdt:Q220845">Reine de Navarre</persName>.
+</p>
+<head><hi rend="sc">Août</hi> 1578</head>
+<p>Le vendredy, premier jour dudict mois d’aoust, ladicte dame
+<persName ref="wdt:Q220845">Royne de Navarre</persName> et son train à d’<placeName type="itineraire" ref="wdt:Q247256">Ollainville</placeName>. 25 éc. 12 s. 18 d. 
+</p><p>«&#160;Et partans de <placeName type="itineraire" ref="wdt:Q90">Paris</placeName>, écrit <persName ref="wdt:Q220845">Marguerite</persName> dans ses Mémoires, le Roy
+nous mena à son d’<placeName type="itineraire" ref="wdt:Q247256">Ollinville</placeName>, où, après nous avoir traictez quelques
+jours, nous prismes congé de luy…&#160;» <persName ref="wdt:Q2007428">L’Estoile</persName> nous apprend dans
+son <hi rend="italic">Journal</hi> que la terre d’<placeName type="itineraire" ref="wdt:Q247256">Ollainville</placeName>, aujourd’hui canton d’Arpajon,
+<choice><abbr>arr.</abbr><expan xml:lang="fr">arrondissement</expan></choice> de Corbeil (Seine-et-Oise), était un des séjours favoris d’<persName ref="wdt:Q53448">Henri&#160;<hi rend="sc">III</hi></persName>.
+Il l’avait achetée <measure type="currency" quantity="60000" unit="livre">60&#160;000&#160;livres</measure>, donnée à sa femme et meublée avec
+une richesse inouïe. C’est de ce lieu que partirent <persName ref="wdt:Q220845">Marguerite</persName> et la
+<persName ref="wdt:Q131552">Reine-Mère</persName>, le 2 août au matin.
+</p><p>Le samedi, 2<hi rend="sup">e</hi> jour dudict moys et an, ycelle dame et partie 
+de son train disne à <placeName type="itineraire" ref="wdt:Q247256">Dollainville</placeName>, et le reste disne à Chastre, souppe et couche à <placeName type="itineraire" ref="wdt:Q205584">Estampes</placeName>… 518 éc. 19 s. 7 d.
+</p><p>Le dimanche, 3<hi rend="sup">e</hi> jour dudict moys, ladicte dame et son
+train disne à <placeName type="itineraire" ref="wdt:Q538536">Angerville</placeName> et souppe et couche à <placeName type="itineraire" ref="wdt:Q706912">Artenay</placeName>…
+57 éc. 2 s. 7 d.
+</p><p>Le lundi, 4<hi rend="sup">e</hi> jour dudict mois, ladicte dame et son train
+disne aux <placeName type="itineraire" ref="wdt:Q6548">faulxbourgs d’Orléans</placeName> et souppe et couche à
+<placeName type="itineraire" ref="wdt:Q816291">Cléry</placeName>… 74 éc. 3 s. 8 d.
+</p><p>Le mardi, 5<hi rend="sup">e</hi> jour dudict mois, ycelle dame et son train disne
+souppe à <placeName type="itineraire" ref="wdt:Q829633">S. Dye</placeName> et couche à <placeName type="itineraire" ref="wdt:Q160927">Blois</placeName>… 47 éc. 12 s. 9 d.
+</p><p>Le mercredi 6<hi rend="sup">e</hi> jour dudict mois, ladicte dame et son
+train à <placeName type="itineraire" ref="wdt:Q274619">Chenonceaux</placeName>… 43 éc. 14 s. 10 d.
+</p><p>Du 7 au 10, séjour à <placeName type="itineraire" ref="wdt:Q274619">Chenonceaux</placeName>.
+</p><p>Le lundy, 11<hi rend="sup">e</hi> jour dudict mois, ladicte dame et son train
+tout ce jour à <placeName type="itineraire" ref="wdt:Q288">Tours</placeName>.
+</p><p>Le mardy 12, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q288">Tours</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q243032">Azé-le-Rideau</placeName>. 
+</p><p>Le mercredy 13, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q243032">Azé-le-Rideau</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q194138">Chinon</placeName>.
+</p><p>Le jeudy 14, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q194138">Chinon</placeName>,
+souppe et couche en l’abbaye de <placeName type="itineraire" ref="wdt:Q632276">Fontevrault</placeName>.
+</p><p>Le vendredy 15, tout le jour en l’abbaye de <placeName type="itineraire" ref="wdt:Q632276">Fontevrault</placeName>.
+</p><p>Le samedy 16, ycelle dame et son train disne à <placeName type="itineraire" ref="wdt:Q194138">Chinon</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q1136074">Champigny</placeName>.
+</p><p>Le dimanche 17, tout le jour à <placeName type="itineraire" ref="wdt:Q1136074">Champigny</placeName>.
+</p><p>Le lundy 18, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q1435299">Mont-sur-Guêne</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q753745">Mirebeau</placeName>.
+</p><p>Le mardy 19, ladicte dame et son train disne au <placeName type="itineraire" ref="wdt:">Pont-d’Oranse</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q6616">Poictiers</placeName>.
+</p><p>Le mercredi 20, tout le jour à <placeName type="itineraire" ref="wdt:Q6616">Poictiers</placeName>.
+</p><p>Le jeudi 21, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q6616">Poictiers</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q1613150">Vyvonne</placeName>.
+</p><p>Le vendredi 22, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q1613150">Vyvonne</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q832135">Couay</placeName>.
+</p><p>Le samedi 23, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q832135">Couay</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q748393">Civray</placeName>.
+</p><p>Le dimanche 24, tout le jour à <placeName type="itineraire" ref="wdt:Q748393">Civray</placeName>.
+</p><p>Le lundi 25, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q730659">Ruffec</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q836557">Verteuil</placeName>.
+</p><p>Le mardi 26, ladicte dame et son train disne à <placeName type="itineraire">Renay</placeName> et
+couche à <placeName type="itineraire" ref="wdt:Q1451759">Nègre</placeName>.
+</p><p>Le mercredi 27, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q1436968">Anville</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q1438952">Neufvy</placeName>. 
+</p><p>Le jeudi 28, ladicte dame et son train disne et souppe à
+<placeName type="itineraire" ref="wdt:Q285">Cognac</placeName>.
+</p><p>Du 29 au 31 août, séjour à <placeName type="itineraire" ref="wdt:Q285">Cognac</placeName>.
+</p><p>Total des dépenses pour le mois d’août&#160;: <measure type="currency" quantity="2617" unit="écu">2&#160;617&#160;écus</measure>, <measure type="currency" quantity="8" unit="sol">8 sols</measure>,
+<measure type="currency" quantity="6" unit="denier">6 deniers</measure>.
+</p>
+<head><hi rend="sc">Septembre</hi> 1578</head>
+<p>Du 1<hi rend="sup">er</hi> au 5, séjour à <placeName type="itineraire" ref="wdt:Q285">Cognac</placeName>.
+</p><p>«&#160;Je me souviens, car j’y estois, écrit <persName ref="wdt:Q733270">Brantôme</persName>, que lorsque la
+Royne, mère du Roi, mena ceste Royne sa fille au <persName ref="wdt:Q936976">roy de Navarre</persName>,
+son mary, elle passa par Coignac où elle fit quelque séjour&#160;; et là, 
+plusieurs grandes, belles et honnestes dames du pays les vindrent
+voir et leur faire la révérence&#160;; que toutes furent ravies de voir la
+beauté de cette <persName ref="wdt:Q220845">royne de Navarre</persName>, et ne se pouvoient saouler de la
+louer à la Royne sa mère qui en estoit perdue de joie, etc.&#160;»
+</p><p><persName ref="wdt:Q131552">Catherine</persName> espérait, en s’arrêtant à <placeName type="itineraire" ref="wdt:Q285">Cognac</placeName>, que le <persName ref="wdt:Q430973">prince de Condé</persName>,
+gouverneur d’Aunis et de Saintonge, viendrait la saluer en ce lieu.
+Mais <persName ref="wdt:Q430973">Condé</persName>, jaloux de plus en plus du <persName ref="wdt:Q936976">roi de Navarre</persName>, n’en eut garde&#160;;
+si bien qu’après l’avoir attendu cinq jours, la <persName ref="wdt:Q131552">Reine-Mère</persName>, dépitée
+profondément, dut continuer son chemin.
+</p><p>Le samedi, 6<hi rend="sup">e</hi> jour de septembre, ladicte dame et son
+train disne et souppe à <placeName type="itineraire" ref="wdt:Q741626">Pons</placeName>.
+</p><p>Du dimanche 7 au mardi 9, séjour à <placeName type="itineraire" ref="wdt:Q741626">Pons</placeName>.
+</p><p>Le mercredi 10, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q1350283">Plassac</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q587841">Mirambeau</placeName>.
+</p><p>Le jeudi 11, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q186287">Tollyer</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q202562">Blaye</placeName>.
+</p><p>Le vendredi 12, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q202562">Blaye</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q715671">Bourg</placeName>.
+</p><p>Le samedi 13, tout le jour à <placeName type="itineraire" ref="wdt:Q715671">Bourg</placeName>. 
+</p><p>Le dimanche 14, disne à <placeName type="itineraire" ref="wdt:Q715671">Bourg</placeName>, souppe et couche à <placeName type="itineraire" ref="wdt:Q6544">Lybourne</placeName>.
+</p><p>Du lundi 15 au mardi 16, séjour à <placeName type="itineraire" ref="wdt:Q6544">Lybourne</placeName>.
+</p><p>Le mercredi 17, disne et couche à <placeName type="itineraire" ref="wdt:Q194265">Créon</placeName>.
+</p><p>Le jeudi 18, disne à <placeName type="itineraire" ref="wdt:Q194265">Créon</placeName>, souppe et couche à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>.
+</p><p>Du vendredi 19 au lundi 29, séjour à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>.
+</p><p>Jusqu’à ce moment, aucun incident n’avait marqué le voyage des
+deux Reines. Les lettres de <persName ref="wdt:Q131552">Catherine</persName>, écrites à son fils <persName ref="wdt:Q53448">Henri&#160;<hi rend="sc">III</hi></persName> soit
+de <placeName type="itineraire" ref="wdt:Q274619">Chenonceaux</placeName>, soit de <placeName type="itineraire" ref="wdt:Q285">Cognac</placeName>, n’ont trait qu’aux affaires générales
+du royaume. Le temps était chaud, les routes mal entretenues. Les
+étapes ne pouvaient être bien longues. Il fallait laisser à la suite si
+nombreuse des deux princesses le temps de les rejoindre. De là ces
+arrêts forcés. Mais une fois arrivée à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>, <persName ref="wdt:Q131552">Catherine</persName> reprend
+son rôle de reine et de médiatrice.
+</p><p>Cette ville avait, peu de temps avant, refusé d’ouvrir ses portes au
+<persName ref="wdt:Q936976">roi de Navarre</persName>. Celui-ci, blessé dans son amour-propre, répondit à
+l’appel de <persName ref="wdt:Q131552">Catherine</persName> qu’il ne la rejoindrait qu’ailleurs. La <persName ref="wdt:Q131552">Reine-Mère</persName>
+exigea, pour ces motifs, que la capitale de la Guyenne fit à la Reine
+de Navarre une entrée solennelle. <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName> le comprit et n’y manqua
+point.
+</p><p>Le <persName ref="wdt:Q678012">maréchal de Biron</persName>, gouverneur de la province, y avait devancé
+la Cour.
+</p><p>«&#160;Au mois de septembre 1578, écrit de Lurbe dans sa <hi rend="italic">Chronique</hi>
+<hi rend="italic">Bordelaise</hi>, fut donné advis à Messieurs les Jurats de l’arrivée prochaine 
+de la Reyne, mère du Roy, et de la Reyne de Navarre, et
+furent aprestées incontinent deux maisons navales&#160;; et leurs Majestés
+estans à <placeName type="itineraire" ref="wdt:Q715671">Bourg</placeName>, deux de Messieurs les Juratz y furent députéz,
+ensemble le procureur de la Ville, chargés de mémoires pour faire
+entendre à leurs Majestés. Cependant ledit sieur <persName ref="wdt:Q678012">maréchal de Biron</persName>
+arrive qui fit son entrée à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>, comme lieutenant du Roy, le
+mardy 18 septembre 1578. L’une des maisons navales, préparée pour
+la Reyne, lui fust emmenée au port <hi rend="italic">de la Bastide</hi> par deux de
+Messieurs les Jurats, l’artillerie rangée sur la rivière, les habitans
+aussi tous en armes et en ordre.&#160;»
+</p><p>Et Jean de Gauffreteau, ajoute&#160;: «&#160;Le dimanche 21 septembre, la <persName ref="wdt:Q220845">Royne de Navarre</persName> alla descendre aux <hi rend="italic">Chartreux</hi>, où les Jurats de
+Bourdeaux luy avoient faict dresser une maison en laquelle tous les
+ordres de la ville la vindrent saluer, et chacun d’eux luy fit sa harangue. 
+De là, elle alla à la porte du <hi rend="italic">Caillau</hi>, là où le poësie luy fust
+présenté par les Jurats, qui de là la conduisirent, avec les compaignies 
+de la ville en armes, dans l’église <hi rend="italic">Saint-André</hi>, où elle presta
+le serment, en tel cas accoustumé, entre les mains du seigneur
+archevêque. Sa Majesté fust logée en la <hi rend="italic">maison du Président</hi>
+<hi rend="italic">Villeneuve</hi>, sur les fossés appelés du <hi rend="italic">Chapeau Rouge</hi>.&#160;»
+</p><p>«&#160;Le 18 septembre, dit l’abbé O’reilly, dont la version diffère quelque 
+peu, la <persName ref="wdt:Q131552">Reine-Mère</persName> fut reçue sur le port, au Portau-Barrat,
+par les autorités de la ville&#160;: elle fut conduite avec pompe chez
+<choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Pontac, trésorier, d’autres disent chez <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Villeneuve,
+président au Parlement&#160;; on lui présenta un dauphin de huit pieds
+qu’on venait de pêcher. La <persName ref="wdt:Q220845">Reine de Navarre</persName> logea chez <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;Guérin,
+conseiller, près du Palais.&#160;»
+</p><p>C’est bien le 18 septembre qu’eut lieu l’entrée des deux Reines à
+<placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>&#160;; car <choice><sic>cettte</sic><corr>cette</corr></choice> date concorde, d’abord avec celle de l’itinéraire,
+puis avec celle d’une lettre adressée, le soir même, de cette ville
+par <persName ref="wdt:Q131552">Catherine</persName> à <persName ref="wdt:Q3396109"><choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Bellièvre</persName>.
+</p><p>Tous les honneurs furent pour la <persName ref="wdt:Q220845">Reine de Navarre</persName>. «&#160;La Reine sa
+mère, écrit <persName ref="wdt:Q733270">Brantôme</persName> qui s’y trouvoit, le voulut ainsy, car elle l’aimoit 
+infiniment et l’estimoit fort. Elle étoit montée sur une belle
+haquenée blanche, harnachée fort superbement, et elle estoit vestue
+toute d’orangé et de clinquant, si somptueusement que rien plus,
+laquelle le monde ne se pouvoit assez saouler de voir, la regarder,
+l’admirer et l’exalter jusqu’au ciel.&#160;»
+</p><p>Aux discours de l’Archevêque pour le clergé, du <persName ref="wdt:Q678012">maréchal de Biron</persName>
+comme maire et lieutenant général, de <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;Lagebaston premier président 
+pour le Parlement, <persName ref="wdt:Q220845">Marguerite</persName>, toujours d’après <persName ref="wdt:Q733270">Brantôme</persName>,
+«&#160;qui estoit près d’elle sur l’eschaffaut par son commandement, leur
+respondit à tous les uns après les autres, si éloquemment, si sagement 
+et si promptement, et avecques telle grâce et majesté… que je vis le soir ledit sieur président qui me vint dire, et à d’autres en
+la chambre de la reyne, qu’il n’avait jamais ouy mieux dire en sa
+vie.&#160;»
+</p><p>Nous ne raconterons pas ici les multiples détails des réceptions,
+fêtes, réjouissances, négociations qui marquèrent le séjour des deux
+Reines dans la capitale de la Guyenne. Tous les chroniqueurs locaux
+les ont suffisamment narrés. La lettre de <persName ref="wdt:Q131552">Catherine</persName> au Roi, du
+29 septembre, en dit plus long du reste que n’importe quel document.
+</p><p>Rappelons seulement que le Parlement se tint sur une grande réserve,
+se trouvant depuis quelque temps en lutte ouverte avec la
+Cour, que les Jurats au contraire assurèrent les Reines de leur inébranlable 
+fidélité et leur firent présent «&#160;d’un pentagone d’or massif,
+bien élaboré, avec certaines inscriptions diverses et chifres à leur
+louange&#160;», qu’il fut fait «&#160;un reiglement concernant le gouvernement 
+de la ville et la nomination des Intendants&#160;», et que les capitaines 
+renouvelèrent tous leur serment en présence du <persName ref="wdt:Q678012">maréchal de 
+Biron</persName>, etc.
+</p><p>«&#160;J’espère partir demain de cette ville, écrit à la fin de cette lettre
+du 29 septembre la <persName ref="wdt:Q131552">Reine-Mère</persName> au Roi son fils, y laissant toutes
+choses si bien ordonnées que j’estime, comme aussy font tous lesdicts 
+seigneurs ceux de vostre Conseil qui sont icy auprès de moy,
+que tout y continuera en repos et union. J’iray, Dieu aidant, ledict
+jour de demain coucher à <hi rend="italic">Cadaillac</hi> et le jour d’après qui sera
+mardy, j’irai de bonne heure à <hi rend="italic">Saint-Maquaire</hi>, ny aiant que la
+rivière de Garonne entre ledict Saint-Maquaire et <hi rend="italic">Langon</hi>, où se
+doibt trouver le Roi de Navarre, vostre frère, vers lequel j’ay renvoié 
+ce matin les sieurs de <persName ref="wdt:Q3121749">Pibrac</persName> et de La Mothe-Fenélon, pour luy faire entendre ma délibération, afin que ce jour-là nous nous
+puissions voir, et dès le lendemain, je ne fauldrai de vous faire une
+ample despêche du tout.&#160;»
+</p><p>Rencontrer enfin le <persName ref="wdt:Q936976">roi de Navarre</persName>, lui remettre son épouse et assurer 
+la paix, tel est le but que poursuit ardemment <persName ref="wdt:Q131552">Catherine</persName> et
+pour lequel elle ne craint d’affronter ni les dangers, ni les fatigues de
+ce long voyage.
+</p><p>«&#160;L’entrevue des deux Reines et du Roi de Navarre, écrivait à cette
+date l’ambassadeur Saracini à son maitre le grand duc de Toscane,
+est encore retardée pour divers obstacles, notamment à cause de
+<choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;le <persName ref="wdt:Q678012">maréchal de Biron</persName>. Néanmoins, à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>, où elles sont,
+les Huguenots leur ont fait un bon accueil.&#160;».
+</p><p>Enfin le départ eut lieu le 30 septembre.
+</p><p>Le mardi, 30<hi rend="sup">e</hi> jour de septembre, ladicte dame et son
+train disne à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>, souppe et couche à <placeName type="itineraire" ref="wdt:Q333571">Cadillac</placeName>.
+</p><p>Total des dépenses en ce mois de septembre pour la maison de la
+<persName ref="wdt:Q220845">Reine Marguerite</persName> qui seule doit nous occuper&#160;: <measure type="currency" quantity="2983" unit="écu">2&#160;983&#160;écus</measure>, <measure type="currency" quantity="4" unit="sol">4 sols</measure>, <measure type="currency" quantity="3" unit="denier">3
+deniers</measure>.
+</p><p>Il ne put être payé que <measure type="currency" quantity="2656" unit="écu">2&#160;646&#160;écus</measure>.
+</p>
+<head><hi rend="sc">Octobre</hi> 1578</head>
+<p>Le mercredi 1<hi rend="sup">er</hi> jour d’octobre 1578, la dame <persName ref="wdt:Q220845">royne de Navarre</persName> 
+disne à <placeName type="itineraire" ref="wdt:Q333571">Cadillac</placeName>, souppe et couche à <placeName type="itineraire" ref="wdt:Q471984">Sainct-Macaire</placeName>.
+</p><p>Le jeudi 2, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q471984">Sainct-Macaire</placeName> 
+et couche à <placeName type="itineraire" ref="wdt:Q263456">la Réole</placeName>.
+</p><p>C’est dans cette journée, et entre ces deux villes, «&#160;en une maison
+seulle, écrit <persName ref="wdt:Q131552">Catherine</persName> à son fils, qui est sur le chemin, appelée <hi rend="italic"><placeName type="itineraire" ref="wdt:Q302713">Casteras</placeName></hi>, 
+où nous sommes descendus&#160;» que le Roi de Navarre, rencontra 
+enfin sa femme <persName ref="wdt:Q220845">Marguerite</persName> ainsi que sa belle-mère. «&#160;Il estoit
+escorté, écrit-elle, d’une fort belle trouppe de gentilshommes qui
+estoient au nombre d’environ cent cinquante maistres, fort en ordre
+et bien montez. Il m’a trouvée et la <persName ref="wdt:Q220845">royne de Navarre</persName> vostre
+sœur, vostre nepveu, et mes cousines les princesses de Condé et
+Montpensier, l’attendant en une salle haulte de ladite maison, nous
+ayant fort honnestement de très bonne grâce et, ce semble, de très grande affection et avec fort grand aize salué&#160;; le vicomte de Tourenne 
+est entré avec luy et quelques ungs des principaulx&#160;; et,
+après le bon accueil que vous pouvez bien penser que nous luy
+avons faict et nous estans entretenus ung peu de temps de propos
+commungs, nous sommes descendus de ladicte salle et montez en
+mon chariot, où il est aussi entré et venu avec nous jusques en ce
+lieu, faisant toujours, et nous à luy, la plus grande démonstration
+d’aize et de contentement qu’il est possible.&#160;»
+</p><p>La lettre entière est à citer. Sa longueur nous force de la résumer
+brièvement. Et d’abord, il accompagne la <persName ref="wdt:Q131552">Reine-Mère</persName> chez elle, dans
+sa chambre&#160;; puis «&#160;il a voulu mener votre sœur la <persName ref="wdt:Q220845">Royne de Navarre</persName>,
+en son logis, qui est de l’austre costé de la rue, où ils logeront et
+coucheront ensemble&#160;; mais de peur de luy donner peyne, vostre
+dicte sœur n’a poinct été plus loing que mondit logis&#160;; et luy, qui
+avait fort grand chault et pour ce aussy qu’il a faict aujourd’huy
+très grande challeur, s’est allé rafreschir&#160;; et madicte fille et luy
+sont revenuz en ma chambre.&#160;» Là, sans plus tarder, <persName ref="wdt:Q131552">Catherine</persName> engage 
+les négociations. Elle lui dit que le Roi <persName ref="wdt:Q53448">Henri&#160;<hi rend="sc">III</hi></persName> «&#160;l’aime parfaictement,
+comme s’il estoit son frère et comme celuy qui est non
+seulement son beau-frère, mais son héritier après son frère.&#160;» La
+rusée Florentine manœuvra si bien dans cette première entrevue
+qu’<persName ref="wdt:Q936976">Henri de Navarre</persName> consentit à tout. Se réservait-il de prendre plus
+tard sa revanche, ou ne pensait-il en ce moment qu’à sa femme <persName ref="wdt:Q220845">Marguerite</persName>,
+dont il était séparé depuis deux ans et huit mois et qui lui
+revenait dans tout l’éclat de son opulente beauté&#160;?
+</p><p>Dans ses Mémoires, la <persName ref="wdt:Q220845">reine de Navarre</persName> ne consacre qu’une ligne à
+l’entrevue de La Réole. Henri est plus explicite&#160;: «&#160;Je m’en viens,
+écrit-il de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> le 10 octobre à <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Montesquiou, de recueillir la
+Royne-Mère et ma femme à <placeName type="itineraire" ref="wdt:Q263456">la Réole</placeName>, où toutes choses se sont passées
+au souhait et contentement d’un chascun, mesme pour l’establissement
+et entretenement de la paix, dont nous avons déjà commencé à
+traicter, et l’on fera, Dieu aydant, une bonne résolution à l’Isle en
+Jourdain où je les iray retrouver, et partiray d’ici le<hi rend="sc">XV</hi><hi rend="sup">e</hi> du mois,&#160;»
+</p><p>Les deux reines restèrent cinq jours à <placeName type="itineraire" ref="wdt:Q263456">la Réole</placeName>.
+</p><p>Du 3 au 6 octobre, séjour à La Réole.
+</p><p>Si <persName ref="wdt:Q220845">Marguerite</persName> et <persName ref="wdt:Q936976">Henri de Navarre</persName> furent, durant ces cinq jours, tout à la joie de se revoir, <persName ref="wdt:Q131552">Catherine</persName> de son côté ne perdit pas son temps.
+Elle assembla Conseils sur Conseils, entreprit de réconcilier le Roi de
+Navarre avec le <persName ref="wdt:Q678012">maréchal de Biron</persName>, ce en quoi elle fut fort aidée par
+la Reine sa fille, Henri se montrant très courroucé contre lui, et finalement 
+arrêta, avec son gendre, la nomination de commissaires spéciaux 
+chargés dans chaque ville importante de la province de faire
+exécuter l’édit de pacification précédemment signé à <placeName type="itineraire" ref="wdt:Q6616">Poitiers</placeName>, en
+septembre 1577. Leur liste, fort intéressante pour l’histoire locale,
+ainsi que l’énoncé des articles conclus entre les deux partis, ont été
+déjà publiés. Nous n’y reviendrons pas. Disons seulement que le tout
+fut arrêté solennellement en Conseil, se trouvant du côté de la <persName ref="wdt:Q131552">Reine-Mère</persName>,
+<choice><abbr>MM.</abbr><expan xml:lang="fr">Messieurs</expan></choice>&#160;le cardinal de Bourbon, le duc de Montpensier, de Saint-Sulpice,
+d’Escars, de La Mothe-Fénélon, de <persName ref="wdt:Q3121749">Pibrac</persName>, de Foix et Jean de
+Monluc, évêque de <placeName type="itineraire" ref="wdt:Q1467944">Valence</placeName>, tandis que du côté protestant signèrent le
+Roi de Navarre, le vicomte de Turenne, Gratin, Montguion, Guitry,
+Lusignan et Ségur-Pardaillan.
+</p><p>On ne peut douter, en lisant ces pièces, de la sincérité réelle des
+deux partis et de leur désir d’arriver à une paix durable. Les nombreuses 
+correspondances échangées de chaque côté en font foi. Rien
+donc ne résistait en ce moment à l’habile diplomatie de <persName ref="wdt:Q131552">Catherine</persName>,
+encore moins aux charmes de ses filles d’honneur, au premier rang
+desquelles se remarquait la Cypriote Dayelle, dont la beauté avait déjà
+subjugué le Vert-Galant, et l’espiègle Anne d’Atri, plus lard comtesse
+de Château Vilain, qui, en se jouant de lui, faisait tomber à ses pieds,
+le vieux d’Ussac, gouverneur de La Réole et huguenot endurci.
+</p><p>Le mardi 7, ladicte dame et son train disne à La Réolle,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q747513">Saincte-Bazeille</placeName>.
+</p><p>Le mercredi 8, tout le jour à <placeName type="itineraire" ref="wdt:Q747513">Saincte-Bazeille</placeName>.
+</p><p>De cette ville, <persName ref="wdt:Q131552">Catherine</persName> écrit une longue lettre à <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Pailhès,
+gouverneur du comté de Foix, pour lui intimer l’ordre, ainsi qu’aux
+autres commissaires nommés, d’assurer au plus vite la paix dans son
+gouvernement.
+</p><p>Puis, elle réinstalle les prêtres catholiques dans l’exercice de leur
+culte et leur promet au nom du Roi, son fils, aide et protection. 
+</p><p>Enfin elle met en présence, pour la première fois depuis longtemps,
+le Roi de Navarre et le <persName ref="wdt:Q678012">maréchal de Biron</persName>, arrivé, sur son ordre,
+l’après-diner de ce jour&#160;: «&#160;Où il trouva en ma chambre mondict fils
+le <persName ref="wdt:Q936976">Roy de Navarre</persName>, qui luy parla plus brusquement que nous ne
+pensions, vostre sœur la <persName ref="wdt:Q220845">Royne de Navarre</persName> et moy, pour ce qui s’est
+passé entre eulx, dont ledit mareschal montra d’estre fort en collère. 
+Et vous asseure, Monsieur mon filz, que je feuz aucunement en
+peyne comme je rabillerois le tout. Mais les bons offices de vostre
+sœur et de mon cousin le cardinal de Bourbon, et la peine que j’y
+prins envers l’ung et l’aultre pour le bien de vostre service fut cause
+de les accorder, tellement quellement. Toutefoys j’espère qu’en
+continuant comme nous ferons ils se remecteront du tout au bon
+mesnaige que je désire pour le bien de vostre service.&#160;»
+</p><p>Le jeudi 9, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q210742">Marmande</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q1070001">Thonnynx</placeName>.
+</p><p>Ce jour-là le <persName ref="wdt:Q936976">roi de Navarre</persName> se sépara, à <placeName type="itineraire" ref="wdt:Q210742">Marmande</placeName>, des deux reines.
+</p><p>«&#160;J’ay accompagné lesdites dames Reynes jusqu’à <placeName type="itineraire" ref="wdt:Q210742">Marmande</placeName>, écrit-il
+de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, le 23 octobre, à <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;le baron d’Uhard et m’en suis venu
+de là icy. Elles sont à présent à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName> sur le poinct de partir pour
+aller à L’Isle en Jourdain et là y séjourner. Et moy j’ai délibéré de
+les y aller retrouver et partir dans quelques jours. Et d’autant que
+j’ay congédié la plupart des sieurs gentilhommes qui m’ont accompagné,
+j’escrips à d’aultres que je sçais m’estre amys et affectionnés
+et les prie de m’accompagner audict voiage.&#160;»
+</p><p><persName ref="wdt:Q936976">Henri de Navarre</persName> fut fort bien reçu par les Jurats de <placeName type="itineraire" ref="wdt:Q210742">Marmande</placeName>,
+qui, sur les prières de <persName ref="wdt:Q131552">Catherine</persName> «&#160;promirent d’oublier ce qui s’était
+passé durant les troubles. Aussy leurs a-t-il faict fort bonne chère&#160;;
+et leurs ay commandé qu’ils eussent à y recepvoir et laisser entrer
+suivant votre édit de paciffication ceulx de la religion prétendue
+réformée qui y avoient leurs maisons et qui avoient accoustume d’y
+demeurer.&#160;»
+</p><p><persName ref="wdt:Q936976">Henri de Navarre</persName> précéda les deux Reines à <placeName type="itineraire" ref="wdt:Q1070001">Tonneins</placeName>, ville protestante 
+qui tenait pour lui.
+</p><p>«&#160;Je suis venue couscher en ce lieu de Thonnins, écrit <persName ref="wdt:Q131552">Catherine</persName>, qui tenoit pour ceulx de lacdite religion, où mon dict fils le roy de
+Navarre est venu disner et faire pourveoir à ce qui estoit necessaire 
+pour mon arrivée en ce dict lieu, où j’espère, avant en partir,
+restablir avant toute œuvre nostre religion catholique.&#160;»
+</p><p>Nous ne savons si elle y réussit. Toujours est-il qu’elle en repartit le
+lendemain.
+</p><p>Le vendredi 10, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q404783">Esguillon</placeName>,
+souppe et couche au <placeName type="itineraire" ref="wdt:Q1164132">Port-Saincte-Marie</placeName>.
+</p><p>Pourquoi <persName ref="wdt:Q220845">Marguerite</persName> ne suivit-elle pas son mari à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, comme
+son devoir le lui dictait, et resta-t-elle avec sa mère, l’accompagnant
+dans toutes les étapes de son voyage&#160;? C’est que la <persName ref="wdt:Q131552">Reine-Mère</persName> tenait
+avant toutes choses à la garder auprès d’elle pour l’utiliser dans ses
+diplomatiques négociations avec le Roi de Navarre. Elle n’eut pas à se
+plaindre, on le verra, de cette combinaison.
+</p><p>En arrivant au <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>, <persName ref="wdt:Q131552">Catherine</persName> fit exécuter l’édit de
+pacification, comme partout où elle passait, c’est-à-dire «&#160;par acte
+publicqs enregistrés au registre du greffe de la justice de chascun
+d’iceux lieux.&#160;» C’est elle-même qui l’écrit au roi son fils.
+</p><p>Les deux reines, en se promenant rencontrèrent <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Turenne qui
+leur était envoyé par le Roi de Navarre, «&#160;lequel n’estoit pas loing de
+nous de l’austre costé de la rivière où il estoit venu à la chasse.&#160;»
+Turenne avait mission de les entretenir de l’affaire du château de
+Beaucaire en Languedoc et de celle des châteaux de Montaignac et
+Nontron en Périgord.
+</p><p>En même temps, <persName ref="wdt:Q131552">Catherine</persName> écrivait une longue lettre à <persName ref="wdt:Q1605895">Damville</persName>,
+pour le prévenir de son arrivée prochaine à <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName>.
+</p><p>C’est également ce jour là, au <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>, que la <persName ref="wdt:Q131552">Reine-Mère</persName> 
+reçut pour la première fois le sénéchal de Bajaumont, qui vint la
+saluer avec une escorte de vingt-cinq gentilshommes et l’assurer de sa
+fidélité. Elle les remercia de leurs offres et leur promit sa protection
+ainsi que celle du Roi son fils.
+</p><p>Le samedi 11, ladicte dame et son train disne au <placeName type="itineraire" ref="wdt:Q1164132">Port-Saincte-Marie</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>.
+</p><p>Les deux Reines étaient à peine sorties du <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName> qu’elles eurent la surprise de rencontrer le <persName ref="wdt:Q936976">roi de Navarre</persName>. Il vint fort galamment 
+les saluer «&#160;allant, écrit <persName ref="wdt:Q131552">Catherine</persName> à son fils, à la chasse à Lézignan, qui est icy auprès. J’ay esté bien aize de ce qu’ainsy librement 
+il commence à se comporter envers moi.&#160;» Néanmoins il ne
+lui donne rendez-vous à <placeName type="itineraire" ref="wdt:Q735931">l’Isle en Jourdain</placeName> que vers le 15 de ce mois
+d’octobre, ce dont elle se plaint fort. On verra qu’elle dut attendre
+un mois encore, les protestants cherchant le plus possible à retarder
+le jour de la conférence.
+</p><p>Avant d’arriver à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, <persName ref="wdt:Q131552">Catherine</persName> eut une longue conférence avec
+le <persName ref="wdt:Q678012">maréchal de Biron</persName>, qui l’accompagnait, à propos de la garnison de
+cette ville. Elle lui donna des ordres précis pour son entrée solennelle
+et lui exposa comment elle entendait qu’elle et sa fille, la Reine de
+Navarre, fussent officiellement reçues.
+</p><p><persName ref="wdt:Q131552">Catherine</persName> entra seule à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, le soir du 11 octobre, par la porte
+Saint-Georges. Bien que l’itinéraire indique le même jour, <persName ref="wdt:Q220845">Marguerite</persName>
+n’y fit son entrée que le lendemain 12 (jour de dimanche) par la
+porte du Pin. <persName ref="wdt:Q131552">Catherine</persName> fut logée à l’Évêché, <persName ref="wdt:Q220845">Marguerite</persName> dans la maison 
+de Pierre de Nort, seigneur de Naux.
+</p><p>Du 12 au 14, séjour à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>.
+</p><p>Le 16 septembre déjà, de <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>, le <persName ref="wdt:Q678012">maréchal de Biron</persName> écrivait
+aux Consuls d’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>&#160;: «&#160;Messieurs, je voy bien que la Reyne mère du
+Roy et la Reyne de Navarre s’en iront jusques en vostre ville
+d’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, et pour ce advisés de bien tenir toutes choses en bon estat
+pour les bien recevoir et accueillir, ainsi qu’il leur appartient. Il
+fauldra faire quelque belle entrée à la Reyne de Navarre, comme
+on l’a accoustume de faire à toutes les filles de France. Je n’ay
+poinct oblyé de faire entendre à la Reyne la bonne volonté que
+vous avez au service du Roy. Je vous prie n’estre point nonchallans 
+à bien préparer ceste entrée et y pourvoir.&#160;»
+</p><p>Ainsi prévenue, la municipalité <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>aise se mit en devoir de recevoir 
+le mieux possible les deux Reines. Elle leur prépara une magnifique 
+entrée. Tous les honneurs furent pour la <persName ref="wdt:Q220845">Reine de Navarre</persName>. Les
+mémoires du Consul Trinque (1570-1615) que nous a conservés la chronique du Frère Hélie, sont les seuls, avec le Journal des Consuls,
+qui nous en ont transmis le souvenir.
+</p><p>«&#160;Et le 12 octobre 1378, feust faite l’entrée à la Reyne de Navarre
+<persName ref="wdt:Q220845">Marguerite de Valois</persName>. On lui fist une maison à la Porte-du-Pin&#160;; on
+lui porta un pavillon de damas blanc. La mère de la Reyne estoit
+entrée dans <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName> le samedy devant, accompagnée du cardinal de
+Bourbon, de <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Montpensier et des deux frères du <persName ref="wdt:Q430973">prince de 
+Condé</persName>.&#160;» Un emprunt de 800 livres fut contracté à cet effet par la
+municipalité.
+</p><p>Le Parlement de <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> envoya une députation à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, afin que
+dès ce moment, elle offrit aux deux Reines ses services. <persName ref="wdt:Q131552">Catherine</persName>
+la reçut et s’entretint longtemps avec les divers délégués des affaires
+du Languedoc.
+</p><p>Puis, elle réunit dans la grande salle de l’Évêché, où elle logeait,
+tous les gentilshommes de la province, qui étaient venus la saluer. Elle
+prononça un grand discours.
+</p><p>«&#160;Voyant ici tant de noblesse assemblée, écrit-elle au Roi son fils à
+la date du 15 octobre, combien que j’eusse parlé à eulx en diverses
+foys et particulièrement, toutesfoy je feiz assembler tous ceulx qui
+estoyent icy dimanche au matin à ma salle, où ilz se trouvèrent fort
+grand nombre et des plus grands de toute ceste Guienne, je parlay
+longuement à eulx et vous asseure que je n’oubliay rien de tout ce
+qu’il m’a semblé leur devoir dire pour le bien de vostre service.&#160;»
+</p><p>Dans ce discours, dont le texte a été conservé et publié récemment,
+<persName ref="wdt:Q131552">Catherine</persName> proclame avant toutes choses la paix nécessaire à la France&#160;;
+elle assure tous les seigneurs Gascons de la bonne volonté et des bons
+offices du Roi son fils&#160;; elle leur présente tout particulièrement sa fille
+<persName ref="wdt:Q220845">Marguerite</persName>, devenue comtesse de l’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>ais, «&#160;que j’ay chèrement
+nourrye et instruicte à honorer et recognaistre le Roy son frère et singulièrement à avoyr soing du bien et conservacion de ses bons
+subjects, comme je m’asseure qu’elle aura de vous… M’asseurant
+que Dieu luy fera ceste grâce de se conduire si saigement que pourrez
+mectre vostre entière confiance en elle.&#160;» Elle leur recommande
+enfin d’obéir au <persName ref="wdt:Q678012">maréchal de Biron</persName>, «&#160;personnaige duquel la valleur
+bonne et droicte affection au service du Roy est assez congneue
+pour tenir la main et pourveoir à tout ce qui appartiendra au bien
+et conservation de ceste province.&#160;»
+</p><p><persName ref="wdt:Q220845">Marguerite</persName> d’un autre côté s’emploie de toutes ses forces à seconder
+la politique de sa mère, et elle ne néglige rien pour convaincre et
+ramener son époux.
+</p><p>«&#160;Le Roi de Navarre, écrit toujours <persName ref="wdt:Q131552">Catherine</persName> au Roi son fils, continue 
+à montrer de désirer bien fort l’exécution de la paix, se comportant 
+envers ma fille la <persName ref="wdt:Q220845">royne de Navarre</persName>, et elle envers luy, aussi
+heureusement et bien que nous sçaurions désirer&#160;; ma dicte fille
+m’aiant dict que résolument son dict mary veult la paix, mais que
+ceulx qui sont auprès de luy ne la désirent pas.&#160;»
+</p><p>Le mercredi 15, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q207904">La Fox</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q1467944">Vallance</placeName>.
+</p><p>En quittant <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName> le 15 octobre au matin, les deux Reines s’arrêtèrent 
+pour dîner au château de <hi rend="italic"><placeName type="itineraire" ref="wdt:Q207904">Lafox</placeName></hi>, situé au confluent de la Garonne 
+et de la petite rivière de la Séoune à dix kilomètres au sud-est
+d’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>. Ce château appartenait au sénéchal de Bajaumont, <persName ref="wdt:Q131552">Catherine</persName>
+le connaissait bien. Elle s’y était arrêtée, également pour dîner, treize
+ans auparavant, le 23 mars 1564-1565, avant de faire son entrée dans
+<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, alors que, parcourant pour la première fois ce pays en sens inverse,
+elle venait de <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> et descendait la Garonne avec toute la
+Cour de France, le roi Charles&#160;<hi rend="sc">IX</hi> et <persName ref="wdt:Q220845">Marguerite</persName> sa fille, âgée seulement 
+de onze ans.
+</p><p>Le château de <placeName type="itineraire" ref="wdt:Q207904">Lafox</placeName> avait joué un rôle important dans les annales
+du pays. Au <hi rend="sc">xiii</hi>e siècle, il appartenait à la grande famille des Alaman&#160;;
+puis il passa à la maison de Lévis. Deux fois assiégé à l’époque des
+guerres anglaises, il fut plusieurs fois rebâti. En 1562, son propriétaire
+Armand de Durfort, seigneur de <placeName type="itineraire" ref="wdt:Q207904">Lafox</placeName> et de Bajamont y provoqua
+une réunion de tout le parti catholique sous les ordres de Monluc.
+Plus tard, il fut pris par Charles de Monluc à la tête de ses ligueurs et
+ en partie dévasté. Il devint dans les derniers temps la propriété des
+Montpezat, puis des Monestay de Chazeron, enfin des Turenne et des
+Sinéty. Il appartient aujourd’hui à <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;Henri de Brondeau.
+</p><p>Du vieux château, tel qu’il existait à l’époque où les deux Reines
+vinrent y dîner, il ne reste qu’une tour carrée à fenêtres à plein cintre,
+paraissant remonter au <hi rend="sc">XII</hi><hi rend="sup">e</hi> siècle. L’élégant corps de logis, situé au
+Midi, et qui renferme ces grandes salles aux cheminées monumentales,
+éclairées par de hautes fenêtres à meneaux doubles, ne date que de
+l’extrême fin du <hi rend="sc">xvi</hi><hi rend="sup">e</hi> ou plutôt du commencement du <hi rend="sc">xvii</hi><hi rend="sup">e</hi> siècle. Il
+<choice><sic>dût</sic><corr>dut</corr></choice> être bâti après les dégâts qu’y commit Charles de Monluc, postérieurement,
+par suite, aux séjours qu’y firent <persName ref="wdt:Q131552">Catherine</persName> et <persName ref="wdt:Q220845">Marguerite</persName>.
+</p><p>Ce jour-là, 15 octobre, le Roi de Navarre vint les y trouver, pour
+les accompagner jusqu’à <placeName type="itineraire" ref="wdt:Q1467944">Valence</placeName> d’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, «&#160;où il a cousché, combien
+qu’il eust délibéré de s’en retourner à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, d’où il doibt passer à
+<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName> et à Florence.&#160;»
+</p><p>Le jeudi 16, ladicte dame et son train disne et souppe à
+<placeName type="itineraire" ref="wdt:Q383089">Mouassac</placeName>.
+</p><p>Toute la noblesse du Quercy vint y saluer les deux Reines, le sieur
+de Vesin, sénéchal du pays, et l’évêque de Cahors, en tête. <persName ref="wdt:Q131552">Catherine</persName>
+les harangua comme ceux de l’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>ais et leur demanda de l’aider à
+établir la paix. Une indisposition passagère l’empêcha de repartir le soir
+même&#160;: «&#160;Je me trouvay hier mal de ma collique, écrit-elle le lendemain 
+à son fils&#160;; mais, graces à Dieu, je me porte à présent bien.&#160;»
+</p><p>Le vendredi 17, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q383089">Mouassac</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q213285">Chasteau-Sarrazin</placeName>.
+</p><p>«&#160;Je disnerai à <placeName type="itineraire" ref="wdt:Q383089">Moissac</placeName> et j’iray couscher à Castel-Sarrazin&#160;; et,
+demayn, Dieu aidant, qui est samedy, je serai à Toulouze, qui est où
+vostre sœur fera le lendemain son entrée, qui sera dimanche.&#160;»
+<persName ref="wdt:Q220845">Marguerite</persName>, en effet, s’arrêta une nuit à Saint-Jorry.
+</p><p>Le samedi 18, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q917979">Montèche</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q1429096">Sainct-Jorry</placeName>.
+</p><p>Le dimanche 19, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q1429096">Sainct-Jorry</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q7880">Tholouze</placeName>.
+</p><p>Il semble, d’après la correspondance de <persName ref="wdt:Q131552">Catherine</persName> que les deux
+Reines firent leur entrée simultanée dans <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> seulement ce jour de dimanche, 19 octobre. Elles ne devaient y rester que «&#160;quatre
+ou cinq jours&#160;»&#160;; elles y restèrent, la <persName ref="wdt:Q131552">Reine-Mère</persName> dix-huit jours, <persName ref="wdt:Q220845">Marguerite</persName> 
+vingt-trois jours.
+</p><p>Du lundi 20 au vendredi 31, séjour à <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> avec tout
+son train.
+</p><p>Dépenses de la <persName ref="wdt:Q220845">Reine de Navarre</persName> pour ce mois d’octobre&#160;: <measure type="currency" quantity="2986" unit="écu">2&#160;986&#160;écus</measure>,
+<measure type="currency" quantity="15" unit="sol">15 sols</measure>, <measure type="currency" quantity="10" unit="denier">10 deniers</measure>. Payé seulement, <measure type="currency" quantity="2560" unit="écu">2&#160;560 écus</measure>.
+</p>
+<head><hi rend="sc">Novembre</hi> 1578</head>
+<p>Du samedi 1<hi rend="sup">er</hi> au dimanche 9, séjour à <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> avec tout
+son train.
+</p><p>Ce n’est guère que la correspondance de <persName ref="wdt:Q131552">Catherine</persName> qui nous donne,
+comme toujours, des détails précis sur le séjour des deux Reines dans
+la capitale du Languedoc et sur ses occupations politiques.
+</p><p>Et d’abord, elle écrit le 20 octobre, lendemain de son arrivée,
+qu’elle a trouvé les gens de ce pays bien disposés pour la paix, souffrant 
+tous de la guerre, «&#160;qui se faict jusqu’aux portes de la ville.&#160;»
+Aussi a-t-elle de suite conféré avec Joyeuse, en attendant le <persName ref="wdt:Q1605895">maréchal 
+de Damville</persName>, et ayant retardé volontairement l’entrée officielle de la
+<persName ref="wdt:Q220845">Royne de Navarre</persName>, sa fille.
+</p><p>Le 24, elle commence à se plaindre des lenteurs voulues, apportées
+par le Roi de Navarre et surtout par son parti, pour se trouver à la
+réunion projetée de l’Isle-en-Jourdain. Il est vrai que Turenne qui
+vient d’arriver lui a dit que «&#160;l’occasion de ce retardement dudict
+sieur <persName ref="wdt:Q936976">Roy de Navarre</persName> estoit le furoncle qu’il avoit eu à la fesse, pour
+lequel il gardoit encore le lict, le jour qu’il partit de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.&#160;» Des
+deux côtés, du reste, on commence à s’accuser de mauvaise foi. Et les
+raisons invoquées par le Vicomte ne convainquent plus la <persName ref="wdt:Q131552">Reine-Mère</persName>,
+qui voit juste et comprend que les chefs du parti protestant, sinon le
+Roi de Navarre, cherchent à la leurrer.
+</p><p>L’entrée de la <persName ref="wdt:Q220845">Reine de Navarre</persName> est encore remise au dimanche 26.
+</p><p>Elle eut lieu en effet ce jour-là au milieu d’un immense concours
+de peuple. Dom Vaissette dans son <hi rend="italic">Histoire du Languedoc</hi>, Lafaille
+dans les <hi rend="italic">Annales de la ville de <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName></hi> et tous les chroniqueurs modernes nous fournissent à cet égard, à défaut des lettres de la
+<persName ref="wdt:Q131552">Reine-Mère</persName>, les détails les plus circonstanciés. Le <persName ref="wdt:Q1605895">maréchal de Damville</persName>,
+plus tard duc de Montmorency et gouverneur du Languedoc,
+vint à leur rencontre, escorté de toute la noblesse de la province, des
+capitouls et des membres du Parlement. Les deux Reines entrèrent
+par la porte Saint-Étienne et furent conduites sous des arcs de triomphe 
+et par les rues jonchées de fleurs jusqu’au palais archiépiscopal
+où elles logèrent. Une magnifique procession eut lieu ce jour-là, que
+suivirent les princesses ainsi que tous les gens de leurs maisons. Enfin
+une fête splendide fut offerte par <persName ref="wdt:Q1605895">Damville</persName> en leur honneur. L’accueil
+de la population fut des plus enthousiastes.
+</p><p>Le lendemain, 27 octobre, tomba malade <persName ref="wdt:Q220845">Marguerite</persName>, sans doute
+des suites de la fatigue qu’elle avait endurée le jour de son entrée.
+«&#160;Je suis en grande peine, écrit <persName ref="wdt:Q131552">Catherine</persName> le 29 octobre au Roi, son
+fils, de la malladie survenue à vostre sœur la <persName ref="wdt:Q220845">Royne de Navarre</persName>,
+qui, depuis deux jours, a eu la fiebvre, et crains bien que sa dicte
+malladie nous arreste ici plus que nous ne pensions.&#160;»
+</p><p>Néanmoins elle espère partir quand même dans deux ou trois jours,
+après la fête des Morts, pour L’Isle-en-Jourdain, bien que le Roy de
+Navarre lui ait écrit «&#160;qu’elle ne trouverait pas en ce lieu grande commodité 
+de vivres et de logis,&#160;» proposant de revenir à <placeName type="itineraire" ref="wdt:Q213285">Castelsarrasin</placeName>,
+«&#160;qui est, ajoute <persName ref="wdt:Q131552">Catherine</persName>, ung aussi maubvais logis que L’Isle
+en Jourdain.&#160;» Aussi, puisque cela est décidé, ira-t-elle en ce dernier 
+endroit et lui envoie-t-elle à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, où il est toujours, le sieur de
+La Mothe Fénélon pour le prévenir qu’elle sera sans faute à L’Isle-en-Jourdain 
+le 6.
+</p><p><persName ref="wdt:Q131552">Catherine</persName> quitta en effet <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> le jeudi 6 novembre au matin
+et arriva ce jour-là à L’Isle-en-Jourdain, d’où elle écrivit le soir même
+au Roi son fils pour lui dire qu’elle attendait le lendemain vendredi
+le <persName ref="wdt:Q936976">roi de Navarre</persName>. Elle passa par <placeName type="itineraire" ref="wdt:Q733833">Pibrac</placeName>, où elle s’arrêta juste le temps
+d’écrire une courte lettre à sa cousine la duchesse d’Uzès, restée à
+<placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> auprès de sa fille encore malade.
+</p><p><persName ref="wdt:Q220845">Marguerite</persName> demeura en effet, ainsi que nous l’apprend son livre de
+dépenses, dans la capitale du Languedoc trois jours encore. Elle n’en
+repartit que le lundi 10 novembre. 
+</p><p>Le lundi 10, ladicte dame et son train disne à <placeName type="itineraire" ref="wdt:Q7880">Tholouze</placeName>,
+souppe et couche à <placeName type="itineraire" ref="wdt:Q733833">Pibrac</placeName>.
+</p><p>Le château de <placeName type="itineraire" ref="wdt:Q733833">Pibrac</placeName>, à 23 kilomètres ouest de <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName>, venait
+d’être rebati à neuf et contenait un splendide mobilier. Il appartenait
+à <persName ref="wdt:Q3121749">Gui du Faur de Pibrac</persName>, conseiller au Parlement, conseiller d’État et
+chancelier de la <persName ref="wdt:Q220845">Reine de Navarre</persName>. Quoique âgé à ce moment de cinquante-quatre 
+ans, il subissait, l’accompagnant depuis <placeName type="itineraire" ref="wdt:Q90">Paris</placeName>, le charme
+irrésistible de la beauté de <persName ref="wdt:Q220845">Marguerite</persName>, passion qui devait lui susciter
+dans la suite, comme nous le verrons, tant d’embarras. Aussi fut-elle
+splendide la réception que «&#160;ce vieux fou de <persName ref="wdt:Q3121749">Pibrac</persName>&#160;» eut la joie de
+pouvoir faire en son propre château à l’objet encore inavoué de sa
+naissante flamme. <persName ref="wdt:Q220845">Marguerite</persName> en repartit le lendemain pour rejoindre
+sa mère à L’Isle en Jourdain.
+</p><p>Le mardi 11, ladicte dame disne à <placeName type="itineraire" ref="wdt:Q733833">Pibrac</placeName>, souppe et couche 
+à <placeName type="itineraire" ref="wdt:Q735931">l’Isle en Jourdain</placeName>.
+</p><p>Du 12 au 18, séjour à <placeName type="itineraire" ref="wdt:Q735931">l’Isle en Jourdain</placeName> avec tout son train.
+</p><p><persName ref="wdt:Q131552">Catherine</persName> attendit quatre jours en ce petit village <persName ref="wdt:Q936976">Henri de Navarre</persName>,
+qui toujours ne venait pas&#160;: «&#160;Il faut que je vous dye, écrit-elle le
+8 novembre au soir au Roi son fils, que je suis merveilleusement
+faschée et ennuyée d’avoir esté desja icy trois jours sans avoir eu
+aucunes nouvelles de mon filz le <persName ref="wdt:Q936976">roi de Navarre</persName>, ny du sieur de
+Lamothe-Fenelon que j’ay envoyé vers luy pour le haster de venir.
+Je leur viens encore de despecher ung lacquais, combien que l’on
+me dye que ce soir mondict filz vient coucher à Mauvesin, pour
+estre icy demain à disner.&#160;»
+</p><p>Le 13 novembre, Henri n’était point encore arrivé. Son entourage,
+craignant une surprise, l’empêchait de partir. Il se décida pourtant,
+sur les instances de <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de La Mothe-Fénélon, à quitter <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> le
+13 novembre, pour venir coucher le 14 à Mauvezin. De là il députe à
+la <persName ref="wdt:Q131552">Reine-Mère</persName>, d’abord <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Miossens, puis <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Chaumont-Guitry,
+afin qu’ils tâtent le terrain, voient si on ne lui ménage pas quelque
+ embûche et proposent pour lieu de conférence la ville de Pamiers,
+ou bien celle de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>. <persName ref="wdt:Q131552">Catherine</persName> furieuse de se voir ainsi jouée
+refusa ces deux villes&#160;: «&#160;Et sur cela s’est retiré ledict Guitry, après
+toustefois que je luy ay bien lavé la teste, et fait sentir combien luy
+particulièrement m’avait d’obligation, voire de sa vie, ce qu’il n’a
+pas nié.&#160;» Puis elle envoya <persName ref="wdt:Q3121749">Pibrac</persName> à Mauvesin, afin de proposer au
+<persName ref="wdt:Q936976">roi de Navarre</persName> <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName>, <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> ou <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, ou en fin de compte <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p><p>Celui-ci fit répondre par <persName ref="wdt:Q3121749">Pibrac</persName> et le vicomte de Turenne qu’il préférait 
+<placeName type="itineraire" ref="wdt:Q213285">Castelsarrasin</placeName>, à condition qu’il eut la garde du château. Un
+conseil fut tenu, et finalement on accepta de part et d’autre la ville de
+<placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p><p><persName ref="wdt:Q936976">Henri de Navarre</persName> ne vint donc point rejoindre les deux Reines à
+L’Isle-en-Jourdain, comme presque tous les auteurs l’ont écrit.
+</p><p><persName ref="wdt:Q131552">Catherine</persName> et <persName ref="wdt:Q220845">Marguerite</persName> se décidèrent aussitôt à quitter ce lieu et
+à se diriger sur <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> et sur <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p><p>Le mercredi 19, ladicte dame et son train disne à L’Isle en
+Jourdain, souppe et couche à <placeName type="itineraire" ref="wdt:Q322406">Gimont</placeName>.
+</p><p>«&#160;Dès lundi, écrivait <persName ref="wdt:Q131552">Catherine</persName> à son fils, Dieu aydant, je partiray
+d’icy pour aller coucher à <placeName type="itineraire" ref="wdt:Q322406">Agimont</placeName>, de là à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> et à <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName>, où
+je me délibère séjourner tant que je scaiche au vray que leurs
+dépputés soient tous ensemble arrivés audict <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> ou ès environs,
+et qui seront pretz à commencer nostre dicte conférence.&#160;»
+</p><p>Ce jour-là, <persName ref="wdt:Q936976">Henri de Navarre</persName> se décida enfin à venir à la rencontre
+des deux Reines. C’est <persName ref="wdt:Q131552">Catherine</persName> qui nous l’apprend dans une de ses
+lettres, du 22 novembre, écrite d’<placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>. «&#160;Le <persName ref="wdt:Q936976">Roy de Navarre</persName>, dès le
+jour mesme que je party de <placeName type="itineraire" ref="wdt:Q735931">l’Isle en Jourdain</placeName>, vint au devant de
+moy et m’accompaigna jusqu’à <placeName type="itineraire" ref="wdt:Q322406">Gimont</placeName>, où il couscha, et vint encore
+le lendemain disner avec nous en une petite ville nommé Biet (<hi rend="italic">sic</hi>), qui est à deux lieues d’icy, dont il alla couscher à my chemin de
+Florence, où son train et la plupart de ses gens l’attendaient&#160;; mais
+pour ce que la Reyne sa femme se trouva ung peu mal au Biet, elle
+y coucha, qui fut cause que je séjournay hier icy l’attendant.&#160;»
+</p><p>Le jeudi 20, ladicte dame et partie de son train à <placeName type="itineraire" ref="wdt:Q1143441">Aubyet</placeName>
+et le reste à <placeName type="itineraire" ref="wdt:Q181725">Aulch</placeName>.
+</p><p>Le vendredi 21, ladicte dame et tout son train disne à
+<placeName type="itineraire" ref="wdt:Q1143441">Aubyet</placeName>, souppe et couche à <placeName type="itineraire" ref="wdt:Q181725">Aulch</placeName>.
+</p><p>Du 22 au 23, séjour à <placeName type="itineraire" ref="wdt:Q181725">Aulch</placeName> avec tout le train.
+</p><p>À cette date du 23 novembre s’arrête brusquement le livre des
+comptes de la <persName ref="wdt:Q220845">Reine de Navarre</persName> et par suite son itinéraire. La correspondance 
+de <persName ref="wdt:Q131552">Catherine</persName> que sa fille ne quitta point jusqu’à son départ 
+du Languedoc, l’année suivante, nous permettra de combler
+facilement cette lacune de trente-huit jours, le livre de comptes et
+l’itinéraire reprenant au 1<hi rend="sup">er</hi> janvier 1579.
+</p><p>Les deux Reines, contrairement aux prévisions de <persName ref="wdt:Q131552">Catherine</persName> qui
+pensait n’y rester que deux jours, séjournèrent à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> du 22 novembre 
+au 9 décembre 1578. Des incidents mémorables, que nous allons
+mentionner rapidement, signalèrent leur séjour dans la capitale de la
+Gascogne.
+</p><p><persName ref="wdt:Q131552">Catherine</persName>, qui avait <choice><sic>du</sic><corr>dû</corr></choice> se séparer de sa fille malade à <placeName type="itineraire" ref="wdt:Q1143441">Aubiet</placeName>, fit
+son entrée la première le jeudi 20 novembre. Prévenus par une lettre
+du <persName ref="wdt:Q678012">maréchal de Biron</persName>, du 16 novembre, datée de L’Isle-en-Jourdain.
+les consuls <choice><sic>si</sic><corr>se</corr></choice> mirent en devoir de lui préparer, ainsi qu’à sa fille, une
+superbe réception. Leurs registres nous apprennent en effet que ce
+jour-là, cinq d’entre eux, en tête desquels marchait le sieur Vivès, qui
+la harangua, allèrent à sa rencontre «&#160;jusques au-dessus de la tour
+dicte de Las Lasserres et droict le coffin de la ville qui est auprès
+d’une grande borde sur le chemin de <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName>.&#160;» La Reine «&#160;dans
+une grande coche, saillie sur le derrière&#160;», les remercia et les assura
+de la bonne volonté du Roi. Puis un enfant de la ville prononça un
+discours d’apparat. Après quoy la Reine fit son entrée par la porte de
+La Treille, où les consuls lui offrirent les clefs de la ville qu’elle refusa, disant qu’on les gardast pour le Roy son fils.&#160;» Elle fut conduite par
+toute la population «&#160;jusques au grand portail de l’église métropolitaine 
+d’<placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, où elle feust receue avec ung <hi rend="italic"><foreign xml:lang="la">Te Deum laudamus</foreign></hi>
+par Messieurs du chappitre honorablement en orgues, sonnant les
+grandes cloches.&#160;»
+</p><p>Le lendemain vendredi, 21 novembre, entrait à son tour solennellement 
+la <persName ref="wdt:Q220845">Royne de Navarre</persName>. «&#160;Au devant de laquelle, nous apprend
+le même document, et pour lui offrir la ville, feust M<hi rend="sup">e</hi> Anthoine Laburguière,
+licentié, avec une bonne trouppe d’habitans à cheval&#160;;
+et arrivés à la porte de La Trille, sur les deux heures après midy,
+les huict consuls avec leurs livrées virent ladicte Royne dans une
+litière couverte de velours noir, estant les quatre consuls d’ung
+cousté et les aultres d’un aultre.&#160;» Vivès la harangua et lui présenta
+les clefs, qu’elle refusa comme avait fait sa mère. Puis le cortège se
+mit en marche, «&#160;les consuls ayant mis le poesle sur la litière, sonnant
+les trompettes à l’entrée&#160;; et les pièces de canon de la ville commencèrent 
+à lascher sur le chevet de la rue du Puy, près l’Escalier
+Vieilh.&#160;» On se dirigea ainsi vers la cathédrale, au-devant de laquelle 
+attendait le chapitre métropolitain en habit de chœur. «&#160;Mais
+pour ce que ladite Royne se trouvait mal, feust conduicte à son
+lougis, qui estoit à la Chanoynie, et où est la Mirandole. On avait
+semé les armoiries par les portals&#160;; on avait faict portals de triomphes&#160;;
+on luy fist chanter par les enfans de la ville des odes à l’entrée 
+de ladicte ville.&#160;»
+</p><p>Enfin le lendemain samedi, 23 novembre, entra le Roi de Navarre,
+comte d’Armagnac, qui arriva de bon matin, sur les neuf heures,
+en Aux, veoir les Roynes, auquel dans le chasteau archiépiscopal et
+au grand tinel d’iceluy se présantèrent lesdits huict consuls, avec
+ledit Vivès leur assesseur.&#160;» Ces derniers ne purent s’empêcher, dans
+leur harangue, et en lui offrant les clefs, de regretter ce qui s’était
+passé deux ans auparavant, alors qu’ils lui avaient fermé les portes de
+la ville. «&#160;Non, non, répondit vivement Henri, je ne me souviens point
+du passé, mais que vous soiez gens de bien à l’advenir. Et prenant,
+ajoute le procès-verbal officiel, les clefs des mains dudict Vivès, dict
+tels mots&#160;: «&#160;Et bien, baillez les clefs&#160;;&#160;» et après les rendit audict Vivès, disant&#160;: «&#160;Tenez, je vous les rends&#160;; si vous m’estes tels que
+vous devez, je vous seray aussi tel que je dois estre.&#160;» Et le soir
+mesme, ledict seigneur Roy s’en alla à Fleurance.&#160;»
+</p><p><persName ref="wdt:Q936976">Henri de Navarre</persName> ne trouva point la <persName ref="wdt:Q131552">Reine-Mère</persName> à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, «&#160;étant
+allée, écrit Turenne dans ses Mémoires, à une tente de palombes,
+le <persName ref="wdt:Q678012">maréchal de Biron</persName> et autres personnes de qualité estant avec
+elle. Nous trouvasmes la <persName ref="wdt:Q220845">Reyne Marguerite</persName> et les filles. Le Roy de
+Navarre et ladite Reine se saluèrent et se tesmoignèrent plus de préparation 
+à un accomodement qu’ils n’avoient faict les autres fois
+qu’ils s’estoient veus. Les violons vinrent, nous commençames tous
+à danser.&#160;»
+</p><p>Ici se place le fameux incident de la prise de La Réole par les catholiques,
+et, en réponse, de celle de Fleurance par le Roi de Navarre.
+Tous les chroniqueurs l’ont diversement raconté. La légende même
+s’en est mêlée. Une lecture attentive des textes et des documents authentiques 
+nous permettra de ramener les choses à leur véritable point.
+</p><p>D’après la légende, que nombre d’auteurs présentent à tort comme
+fait historique, Mademoiselle d’Aquaviva, Anne d’Atri, plus tard comtesse 
+de Château-Villain, «&#160;la bouffonne d’Atri&#160;» comme l’appelle d’Aubigné 
+dans ses pamphlets toujours empreints d’exagération, aurait
+séduit à ce point, par ses charmes provocateurs, le vieux baron
+d’Ussac, gouverneur de <placeName type="itineraire" ref="wdt:Q263456">la Réole</placeName> et calviniste des plus zélés, que celui-ci 
+pour se venger des quolibets à lui adressés par les gentilshommes
+du <persName ref="wdt:Q936976">roi de Navarre</persName> aurait ouvert aux catholiques les portes de La
+Réole, une des plus fortes places de sureté accordées aux protestants
+par le traité de paix de Bergerac. Cette nouvelle parvint aux oreilles
+du Roi de Navarre, alors que le bal qu’une certaine Madame de la
+Barthe donnait à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> aux deux Cours battait son plein. Henri fit
+signe à ses principaux lieutenants, quitta le bal, monta à cheval, se
+dirigea sur Fleurance, s’empara de cette ville et revint le lendemain
+à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, sans que la <persName ref="wdt:Q131552">Reine-Mère</persName> ni personne de la cour ne se fussent
+doutés de l’aventure.
+</p><p>La correspondance authentique de <persName ref="wdt:Q131552">Catherine</persName>, d’accord en cela avec les Mémoires du vicomte de Turenne, plus tard le duc de Bouillon, Mathieu 
+dans son <hi rend="italic">Histoire du règne de <persName ref="wdt:Q53448">Henri&#160;<hi rend="sc">III</hi></persName></hi>, etc., rectifient la
+plupart de ces erreurs.
+</p><p>Turenne nous apprend en effet qu’on dansait «&#160;chez les filles de la
+<persName ref="wdt:Q220845">Reine Marguerite</persName>&#160;», en l’absence de la <persName ref="wdt:Q131552">Reine-Mère</persName>, qui était allée à une
+chasse aux palombes, lorsque ce samedi 22 novembre, «&#160;la danse continuant 
+», le jeune Armagnac arrive de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> et prévient le Roi de
+Navarre que la nuit précédente La Réole avait esté surprise par le
+chasteau.&#160;» Tous les chefs protestants crurent à une trahison machinée
+par la <persName ref="wdt:Q131552">Reine-Mère</persName>. Le Roi appelle Turenne. «&#160;Le premier mouvement,
+écrit-il, fut si nous estions assez forts pour nous saisir de la ville
+d’Aux. Il fut jugé que non. Soudain je dis qu’il nous fallait sortir et
+qu’avec justice nous pouvions nous saisir du mareschal de Biron et
+aultres principaux qui estoient avec la Reine pour ravoir La Réole.
+Nous prenons congé de la compagnie, qui trouva nostre despart
+plus prompt qu’elle ne se l’estoit promis, n’en sçachant l’occasion.&#160;» Le Roi de Navarre et sa petite troupe sortent d’<placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>. La
+proposition de s’emparer de Biron est repoussée. En revanche on
+accepte celle de prendre Fleurance, puis Lectoure. Mais on décide
+que le <persName ref="wdt:Q936976">roi de Navarre</persName> ira au devant de la <persName ref="wdt:Q131552">Reine-Mère</persName> «&#160;pour lui
+tesmoigner son offense et son respect&#160;»&#160;; ce qui fut fait. «&#160;La Reine
+fit fort l’estonnée et avec raison et donna quantité de paroles pour
+asseurer une réparation.&#160;» Biron de son coté promit «&#160;de faire tout
+debvoir pour faire rendre la place.&#160;»
+</p><p>Néanmoins ce qui avait été projeté fut exécuté. Le Roi de Navarre
+partit pour Fleurance avec sa petite troupe de gentilshommes, y arriva 
+à trois heures de la nuit, força le poste, essuya quelques coups
+d’arquebusades, s’empara des tours, se rendit maitre de la ville et y
+établit garnison. Cela fait, ajoute Turenne, «&#160;nous nous en allâmes à
+<placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> où toute la négociation fut en allées et venues pour avoir réparation 
+de La Réole. À la fin, il fut résolu qu’elle seroit remise à
+ceulx de la religion, mais que le sieur d’Ussac en auroit le gouvernement 
+et le sieur de Favas n’y rentreroit.&#160;» Chose qu’on n’aurait
+certes point fait si d’Ussac avait trahi les intérêts des protestants.
+</p><p>La légende de ses amours séniles avec la bouffone d’Atri est donc
+inexacte, encore plus celle de sa trahison.
+</p><p>En tous cas, Henri ne revint pas à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> le lendemain, ainsi que
+la plupart des auteurs l’ont écrit. 
+</p><p>Les lettres de <persName ref="wdt:Q131552">Catherine</persName> confirment en tous points le récit du
+vicomte de Turenne. Dès ce soir du samedi 22, elle écrit à <persName ref="wdt:Q1605895">Damville</persName>&#160;:
+«&#160;Mon cousin, je suis en extrême peyne et ennuy de la nouvelle qui
+est veneue à mon filz le <persName ref="wdt:Q936976">roy de Navarre</persName> que la Réolle a esté prinse
+par les Catholicques… Il est party tout soudain aller coucher à Florance,
+se délibérant à ce que j’ay sceu de s’acheminer du costé de
+La Réolle, ou j’ay si tost envoyé Beauregard, guidon de la compaignie 
+de mon cousin le mareschal de Biron… Je n’espargneray rien
+pour en faire la justice, y aiant bien de quoy, s’ilz ne remectent
+soudainement la ville par doulceur, la forcer et faire battre de pièces 
+et munitions d’artillerye. Etc.&#160;» On le voit, <persName ref="wdt:Q131552">Catherine</persName> est sincère 
+dans ses désirs d’établir la paix. Ce contre-temps, qui va enrayer 
+les négociations, la rend fort malheureuse et elle dit bien haut
+qu’elle veult joindre ses forces à celles du <persName ref="wdt:Q936976">roy de Navarre</persName>, afin qu’il
+«&#160;veoye de quel pied nous marchons pour reprendre ladicte ville.&#160;»
+</p><p>Mêmes regrets, même politique, dans la lettre autographe qu’elle
+écrit de sa propre main au Roi de Navarre à Fleurance, deux jours
+après, le 24 novembre. «&#160;Cet chause me déplet ynfiniment, de peur
+que cesi aporte quelque remeument soudeyn… Le maréchal de
+Biron part demayn au matin pour y aller et, s’il est possible, entrer
+dedens, pour après la vous remectre entre les mayns, ynsin que le
+Roy la vous ha ballaye. Et moy je m’i achemine aussy, et m’en voy
+demayn coucher à Gigun, où je desirerès ynfiniment pouvoyr vous
+voir&#160;; etc.&#160;»
+</p><p>Enfin ce sont les mêmes sentiments qu’elle exprime dans la longue
+lettre qu’elle écrit le lendemain 25 novembre d’<placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> où elle est
+toujours, et où elle narre au roi son fils avec d’infinis détails toute
+cette affaire. La vraie cause de la surprise de La Réole, elle la donne
+ainsi&#160;: «&#160;Les habitans de La Réolie, se sentant infiniment oppressez et
+maltraictez du cappitaine Favas, ayant sceu qu’il estoit allé en une
+maison là auprès, qu’il a acquise à ce que je puis entendre de rapines, 
+seroient, en aulcuns d’eulx catholiques, saisy dudict lieu et
+chasteau de La Réolle, sans qu’il y soit mort que deux ou trois hommes 
+de ceulx qui estoient dedans.&#160;» Quant à la surprise de Fleurance 
+par le <persName ref="wdt:Q936976">Roy de Navarre</persName>, elle en atténue singulièrement  l’importance. Sa version diffère en tous points de celle de Turenne, de Sully,
+et surtout de d’Aubigné. D’après elle, Henri serait entré paisiblement
+dans Fleurance à dix heures du soir, aurait demandé les clefs de la
+ville, ce qu’il ne faisait jamais, et armé cinquante à soixante protestants. 
+Les catholiques occupèrent alors les tours. Henri menaça d’y
+mettre le feu. Un coup d’arquebuse blessa à la jambe un des siens,
+chose qu’il s’empressa de faire savoir à la <persName ref="wdt:Q131552">Reine-Mère</persName>. Celle-ci donna
+l’ordre à la garnison qui occupait les tours de se retirer, ce qui était
+déjà fait quand l’ordre arriva. Ce coup de main sur Fleurance ne fut
+donc pas aussi hardi, d’après elle, que l’ont écrit les chroniqueurs protestants.
+</p><p>Elle a espoir du reste que tout s’arrangera. Elle renonce à aller à
+La Réole, où elle a envoyé Biron, et ses négociations avec le roi de
+Navarre sont près d’aboutir.
+</p><p>«&#160;Ma fille, la reyne de Navarre, ajoute-t-elle dans la même lettre,
+faict toujours les meilleurs offices en toutes ces affaires pour le bien
+de vostre service.&#160;» Néanmoins, bien que servant d’instrument docile 
+aux vues de <persName ref="wdt:Q131552">Catherine</persName>, <persName ref="wdt:Q220845">Marguerite</persName> semble s’être assez désintéressée 
+de la politique durant toute cette première partie du voyage.
+Son rôle est d’amuser la suite de la Reine, de présider aux fêtes, de
+faire avec ses dames et ses filles assaut de coquetterie et peut-être
+aussi de galanterie. «&#160;Un jour, écrit <persName ref="wdt:Q733270">Brantôme</persName>, elle parut vestue fort
+superbement d’une robe de toile d’argent et coulombin à la Bolonaise, 
+manches pendantes, coiffée si très richement, et avec un voile
+blanc, ny trop grand ny trop petit, et accompaignée avec cela
+d’une majesté si belle et si bonne grâce, qu’on l’eust plustot dicte
+déesse du ciel que Reyne de la terre.&#160;»
+</p><p>À <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, du reste, écrit Sully dans ses <hi rend="italic">Œconomies royales</hi>, «&#160;on
+n’oyait plus parler d’armes, mais seulement de dames et d’amour&#160;;
+nous devimmes tout à fait courtisant et faisant l’amoureux comme
+les autres&#160;; ne nous amusans tous à autre chose qu’à rire, danser et
+courir la bague.&#160;» 
+</p><p>Le temps se passa ainsi jusques au 9 décembre, non toutefois sans
+que <persName ref="wdt:Q131552">Catherine</persName> ait eu le samedi 29 novembre une entrevue avec le roi
+de Navarre à Jegun, place assez forte, à 17 kilomètres au nord-ouest
+d’<placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>. Après quelques récriminations, il fut décidé de part et d’autre
+que la conférence, si souvent annoncée, se tiendrait dans la première
+quinzaine de décembre à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>. <persName ref="wdt:Q131552">Catherine</persName> rend compte de cette entrevue 
+d’abord au <persName ref="wdt:Q1605895">maréchal de Damville</persName>, puis au Roi son fils, dans
+une lettre datée de Jégun du pénultième novembre, d’une longueur
+démesurée. L’affaire de La Réole, celle de Fleurance, les préparatifs 
+de la conférence en font tous les frais.
+</p><p><persName ref="wdt:Q220845">Marguerite</persName> n’accompagna pas sa mère à Jégun. «&#160;Et, après tout ce
+que dessus faict, le <persName ref="wdt:Q936976">Roy de Navarre</persName>, s’estant retiré en son logis, m’a
+soubdain faict dire qu’il desiroit faire acte de bon mary et aller
+veoyr la reyne sa femme à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, dont j’ay esté bien aise, et est à
+l’instant monté à cheval luy quatre cinquième seullement, et s’y
+s’en sont allés au galop, m’asseurant qu’il sera demain matin de
+retour icy.&#160;»
+</p><p>Le 4 décembre, Henri se rendit de nouveau et pour la dernière fois
+à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, toujours, disait-il, pour voir sa femme. Il en profita pour
+signer ce jour-là avec la <persName ref="wdt:Q131552">Reine-Mère</persName> un «&#160;acte public&#160;», en vertu duquel 
+celle-ci s’engageait à restituer La Réole aux Protestants, et Henri
+de son côté Fleurance aux Catholiques.
+</p><p>La Cour allait enfin quitter <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> le lendemain, quand <persName ref="wdt:Q220845">Marguerite</persName>
+retomba malade. Il fallut rester quelques jours encore. «&#160;Aussy, comme
+j’ay dit au <persName ref="wdt:Q936976">Roy de Navarre</persName>, écrit <persName ref="wdt:Q131552">Catherine</persName>, faut-il donner loisir à
+madicte fille de se bien guérir, de peur des inconvéniens quy
+adviennent ordinairement de telles maladies.&#160;»
+</p><p>Enfin <persName ref="wdt:Q220845">Marguerite</persName> se rétablit, et les deux Reines quittèrent <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName> le
+9 décembre pour prendre la direction de <placeName type="itineraire" ref="wdt:Q1467944">Valence</placeName>, <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName> et <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p>
+<head><hi rend="sc">Décembre</hi> 1578</head>
+<p>Le 9 décembre, ladicte dame disne à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, souppe et
+couche à <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName>. 
+</p><p>Du 10 au 15 décembre, séjour à <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName> avec tout son
+train.
+</p><p>Les deux Reines arrivèrent à <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName> avec tout leur train, le
+mardi 9 décembre au soir. Elles y séjournèrent près d’une semaine,
+jusqu’au lundi suivant, 15 de ce mois.
+</p><p>Dès son arrivée, <persName ref="wdt:Q131552">Catherine</persName> envoie <persName ref="wdt:Q3121749">Pibrac</persName> au Roi de Navarre pour
+qu’il lui fixe le jour exact où elle pourra commencer la fameuse conférence, 
+et aussi pour l’entretenir de l’affaire de La Réole, qui est
+loin d’être terminée. En même temps, «&#160;elle donne charge auxdicts
+sieurs de <persName ref="wdt:Q3121749">Pibrac</persName> et de La Mothe, saichans bien que <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> et les
+environs ne pourraient pas longuement suffire à la nourriture de
+tant de gens et de chevaulx qui y seroient, de regarder d’accorder
+quelque lieu, comme ceste ville (<placeName type="itineraire" ref="wdt:Q209802">Condom</placeName>), ou <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, ou bien le <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>,
+qui n’est pas loing dudict <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, pour faire nostre
+dicte conférence.&#160;» Au fond <persName ref="wdt:Q131552">Catherine</persName> n’a pas grande confiance en
+la foi du Béarnais. Elle redoute de s’enfermer dans <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, ville huguenote,
+et si elle ne partage pas les mêmes craintes qu’<persName ref="wdt:Q936976">Henri de Navarre</persName>,
+lors de son séjour à <placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName> et à L’Isle en Jourdain, elle a peur surtout 
+qu’on lui force la main. Aussi, après y être restée deux ou trois
+jours, espère-t-elle que la conférence se tiendra ailleurs. Ces craintes
+nous expliquent le long séjour qu’elle va faire au <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>,
+où elle se trouvera plus en sûreté qu’à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> même.
+</p><p>En attendant, elle profite de son séjour à <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName> pour mettre un
+peu d’ordre dans les affaires de cette ville. «&#160;Car, dit-elle, les querelles
+d’entre le lieutenant-général et le lieutenant-particulier ont tellement 
+brouillé les habitants qu’ils sont tous divisez, et, oultre cela,
+a soubz coulleur de la confrairie Saint-Pierre, qui y est il y a desja
+quelque temps, et d’ung aultre de Saint-Arnault qui s’y commance,
+la noblesse catholique, au moings une bonne partye, y sont attirez,
+de la sorte que la fin n’en pourrait estre que préjudiciable à vostre
+service.&#160;» À cet effet, elle a réuni les principaux de la ville, les a harangués et leur a demandé «&#160;de se despartir desdites confréries,
+n’y proceddant pas du zèlle qu’ils eussent de prier Dieu, mais pour
+faire des menées et s’en servir bien souvent à de très mauvaises
+choses, comme ils avoient bien congneu par ces meurtres qui sont
+advenus en cette ville, et la hayne si grande que l’on veoit entre
+lesdits habitans, tous catholiques&#160;; car ceulx qui sont huguenotz ont
+leur aultre passion à part.&#160;» Elle va en référer à la Chambre tripartie 
+d’<placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>.
+</p><p>Ce court tableau ne nous édifie-t-il pas sur les mœurs étranges et
+les usages, encore bien peu civilisés, des petites villes de la Gascogne,
+à la fin du <hi rend="sc">xvi</hi><hi rend="sup">e</hi> siècle&#160;?
+</p><p>Le 15 décembre, départ de <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName>, arrivée à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p><p>Le 15 décembre au matin, les deux Reines quittèrent <placeName type="itineraire" ref="wdt:Q209802">Condom</placeName> et
+arrivèrent «&#160;d’assez bonne heure&#160;» à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p><p>«&#160;Le <persName ref="wdt:Q936976">Roy de Navarre</persName>, écrit le lendemain <persName ref="wdt:Q131552">Catherine</persName> à son fils, s’est
+accompaigné le plus qu’il a peu, faict et faict faire tout ce qu’il se
+peult envers nous et ceulx de nostre suitte de bon accueil et de
+chère, monstrant d’estre infiniment aize que soions venu icy si franchement 
+que nous avons.&#160;»
+</p><p>Dès le 6 décembre en effet, <persName ref="wdt:Q936976">Henri de Navarre</persName> se préoccupait de
+l’arrivée et du séjour des deux Reines, et il écrivait ce jour là une
+lettre à <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Bourrouillan, gouverneur d’Eauze, pour le prier, lui
+et <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Mauhy, de lui envoyer à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> tout le gibier qu’ils pourraient 
+prendre.
+</p><p>C’est le 15 décembre, nous apprend la lettre de <persName ref="wdt:Q131552">Catherine</persName>, rectifiant 
+ainsi les nombreuses erreurs commises par la plupart des chroniqueurs,
+qu’eut lieu officiellement l’entrée de la <persName ref="wdt:Q220845">Reine de Navarre</persName>
+ dans sa bonne ville de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>. Comme à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>, comme à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, à
+<placeName type="itineraire" ref="wdt:Q7880">Toulouse</placeName>, à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>, elle fut splendide. Pour un moment se turent tous
+les dissentiments politiques. Les deux partis mirent bas les armes&#160;; et
+le peuple, espérant voir surgir, avec le Roi et la <persName ref="wdt:Q220845">Reine de Navarre</persName> dans
+les murs de la capitale de l’Albret, une ère de prospérité et de grandeur,
+s’associa pleinement à la joie générale.
+</p><p>Les trois Cours, celle de la <persName ref="wdt:Q220845">Reine de Navarre</persName>, qui partout passait la
+première, celle de <persName ref="wdt:Q131552">Catherine</persName>, et enfin celle du Roi de Navarre, étaient
+au complet.
+</p><p>Il serait trop long d’énumérer ici les noms de ces personnages plus
+ou moins célèbres, qui tous jouaient ou jouèrent plus tard un rôle
+dans l’histoire politique ou scandaleuse de la Cour de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>. Aussi
+bien a-t-on vu en tête de notre chapitre l’état complet de la maison
+de la <persName ref="wdt:Q220845">Reine de Navarre</persName>. Autour de <persName ref="wdt:Q131552">Catherine</persName> étaient groupés les
+grands conseiller de la couronne et tout l’escadron volant, Madame de
+Sauves, Dayelle, Anne d’Atri, Hélène de Surgères, de la Vergne, etc.&#160;;
+et à côté du Roi de Navarre et de sa sœur, la douce et mélancolique 
+<persName ref="wdt:Q268652">Catherine de Bourbon</persName>, cette glorieuse phalange de Gascons dont
+l’intrépidité et l’audace allaient le porter sous peu sur le trône de
+France, et au premier rang desquels se remarquaient Turenne, Lanoue,
+Favas, Miossens, de Batz, d’Aubigné, Frontenac, Duplessis-Mornay,
+Pardaillan, Lusignan, Roquelaure, Lavardin et tant d’autres encore,
+sans oublier Maximilien de Béthune, baron de Rosny, plus tard duc de
+Sully.
+</p><p>De tous les écrivains qui ont raconté l’entrée de <persName ref="wdt:Q220845">Marguerite</persName> dans
+ <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, le comte de Villeneuve-Bargemont est encore celui qui, dans sa
+<hi rend="italic">Notice historique sur la ville de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName></hi>, nous fournit les renseignements 
+les plus précis. <persName ref="wdt:Q220845">Marguerite</persName> fit son entrée, montée sur une
+haquenée blanche, entre son époux et sa belle-sœur <persName ref="wdt:Q268652">Catherine de
+Bourbon</persName>. «&#160;Des poèmes, des vers de tous genres, écrit <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Villeneuve, 
+exprimèrent à l’envi l’allégresse commune. Salluste
+du Bartas, qui habitait alors le château d’Hordosse, ne laissa pas
+échapper cette occasion de mettre ses talens en évidence. Il composa 
+un dialogue en trois langues, qui fut récité à la Reine par trois
+demoiselles du pays qui représentaient, l’une la Muse Gasconne,
+l’autre la Muse française, la troisième la Muse latine.&#160;» Chacune se
+dispute la faveur de souhaiter la Reine la bienvenue. La Muse
+Gasconne l’emporte&#160;; et son discours en vers est si bien accueilli que
+<persName ref="wdt:Q220845">Marguerite</persName> ravie «&#160;s’empresse de détacher de son cou un mouchoir
+de gaze et l’offre à la demoiselle Sauvage, comme un gage de satisfaction. 
+Longtemps, ajoute <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Villeneuve, on a conservé dans la famille 
+Sauvage le cadeau que la Reine avait fait à la Muse Gasconne.&#160;»
+</p><p>Les deux Reines furent logées au château de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, nouvellement
+achevé, dont les vastes salles pouvaient facilement contenir tout leur
+train.
+</p><p>Le château de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, décrit déjà par <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Villeneuve-Bargemont
+et par nous tel qu’il se trouvait à la fin du <hi rend="sc">xvi</hi><hi rend="sup">e</hi> siècle, grâce au plan
+en relief en liège qui, très exact, est pieusement conservé au Musée
+de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, affectait la forme d’un vaste quadrilatère. L’aile occidentale,
+la plus ancienne, flanquée de quatre tours rondes, remontait à la fin
+du <hi rend="sc">xiv</hi><hi rend="sup">e</hi> siècle. L’aile septentrionale, la seule conservée de nos jours et
+qui présente encore cette élégante galerie en arceaux surbaissés, soutenus 
+par des colonnes ornées de chapiteaux curieusement ouvragés,
+date de la seconde moitié du <hi rend="sc">xv</hi><hi rend="sup">e</hi> siècle. L’aile orientale, donnant sur 
+la Baïse, était l’œuvre d’Alain d’Albret, qui vivait de 1471 à 1522.
+L’aile méridionale enfin, qui comprenait au rez-de-chaussée la salle
+des Gardes de vingt mètres de long sur six de large, au-dessus les 
+grands salons de réception, et à l’extrémité, au coin oriental, la chambre 
+du Roi, avait été la dernière construite, les uns disent par Henri
+d’Albret, d’autres seulement par la mère du futur Henri&#160;<hi rend="sc">IV</hi>. Un large
+perron donnait de ce côté sur le jardin du Roi, qui se déroulait, planté
+d’ifs et de lauriers, sur la rive gauche de la Baïse, tandis que de l’autre 
+côté, sur la rive droite, venait d’être plantée cette magnifique
+Garenne, qui subsiste encore, et dont <persName ref="wdt:Q220845">Marguerite</persName> nous entretient dans
+ses Mémoires avec tant de complaisance.
+</p><p>C’est dans ce cadre que vont se dérouler pendant sept ans les
+évènements dont nous avons entrepris de rappeler le souvenir. C’est
+là qu’au moment même de l’arrivée des deux Reines s’engagèrent
+ces fameuses négociations, but du voyage de <persName ref="wdt:Q131552">Catherine</persName> et si ardemment 
+désirées par elle.
+</p><p>La <persName ref="wdt:Q131552">Reine-Mère</persName> cependant ne les mena point avec autant de célérité
+qu’elle l’aurait voulu. Il lui fallut attendre encore près de deux mois
+avant d’arriver à ses fins.
+</p><p>Mais reprenons sa correspondance, qui est le guide le plus sûr que
+nous puissions trouver&#160;; et, résumant le plus sommairement que nous
+pourrons ses lettres d’une prolixité extrême, arrivons à demêler pendant
+ces quinze derniers jours de décembre son itinéraire, en même temps
+que celui, un peu plus difficile à déterminer, de sa fille <persName ref="wdt:Q220845">Marguerite</persName>.
+</p><p>Du 16 au 22 décembre, séjour à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> avec tout son train.
+</p><p>L’affaire de La Réole n’est point terminée, celle de Lauzerte non
+plus. En outre <persName ref="wdt:Q131552">Catherine</persName> se préoccupe de ce qui est advenu à Périgueux 
+«&#160;où Vivans a faict tuer à coup de dague, puis jeter dans la
+rivière cinq ou six catholiques et sans occasion.&#160;» Elle a eu la veille
+au soir une longue entrevue avec <persName ref="wdt:Q936976">Henri de Navarre</persName>, Turenne et
+Guitry, à la suite de laquelle elle a signé avec son gendre, à l’égard
+de La Réole, ce qu’elle appelle «&#160;<hi rend="italic">des promesses réciproques</hi>,&#160;» Néanmoins 
+elle craint que la reddition de cette ville ne traine bien en
+longueur.
+</p><p>Le 18, <persName ref="wdt:Q131552">Catherine</persName> écrit, toujours de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> où elle est avec sa fille, une
+lettre à <persName ref="wdt:Q3396109">Monsieur de Bellièvre</persName> au sujet des affaires de Normandie. 
+</p><p>Le 20, jour de samedi, elle prévient <persName ref="wdt:Q1605895">Damville</persName> que «&#160;Dieu aydant,
+elle partira de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> lundi prochain pour aller faire sa feste à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>.&#160;»
+</p><p>Elle quitta en effet <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> ce jour là, mais ne dépassa pas le <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>.
+</p><p>Si, pendant ces huit jours passés à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, la politique fut contraire à
+<persName ref="wdt:Q131552">Catherine</persName>, sa fille <persName ref="wdt:Q220845">Marguerite</persName>, ses dames d’honneur, le Roi de Navarre,
+ses courtisans, s’en consolèrent plus facilement qu’elle, en ne songeant 
+qu’aux fêtes, qu’aux bals, qu’aux réjouissances, et disons-le
+aussi qu’à l’amour.
+</p><p>Jusqu’à ce jour en effet <persName ref="wdt:Q936976">Henri de Navarre</persName> et ses amis n’avaient fait
+qu’entrevoir à La Réole, à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>, et quelques heures à peine à <placeName type="itineraire" ref="wdt:Q181725">Auch</placeName>,
+le brillant cortège dont s’étaient entourées les deux Reines. À peine le
+temps pour chacun de jeter leur dévolu sur quelqu’une de ces jolies
+filles.
+</p><p>Cette première semaine passée ensemble à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> aviva leurs
+flammes&#160;; si bien qu’il faut voir peut-être uniquement dans les sentiments 
+de ces jeunes hommes, aux passions violentes, et dans leur
+désir de prolonger autant que possible ces heureux moments, les
+seuls motifs du retard apporté par eux à la fameuse Conférence. À la
+chronique politique et diplomatique force nous est donc d’associer
+dès ce moment la chronique amoureuse, et, sans donner la moindre
+foi aux exagérations du <hi rend="italic">Divorce Satyrique</hi>, de nous faire à notre
+tour l’écho de ce qui se disait sous ce rapport à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>.
+</p><p>C’est le sage Sully qui, dans ses <hi rend="italic">Mémoires</hi>, nous en apprend déjà
+fort long&#160;: «&#160;Le mélange des deux Cours, qui ne cédaient en rien l’une
+à l’autre du côté de la galanterie, produisit l’effet qu’on devait en
+attendre. On se livra aux plaisirs, aux festins, ballets et fêtes galantes. 
+Mais, pendant que l’amour étoit devenu l’affaire la plus sérieuse
+de tous les courtisans, <persName ref="wdt:Q131552">Catherine</persName> ne s’occupait que de sa politique. 
+Pour ceste fois elle ne réussit point… De cette bigarrure de
+politique et de galanterie, il y aurait de quoi grossir considérablement 
+ces Mémoires, etc.&#160;»
+</p><p>C’est <persName ref="wdt:Q220845">Marguerite</persName> elle-même qui, dans ses <hi rend="italic">Mémoires</hi>, proclame hautement 
+les infidélités de son mari, mais non les siennes. «&#160;La Reyne
+ma mère pensait demeurer peu de temps en Gascogne&#160;; mais il
+survinst tant d’accidents, et du costé des Huguenots et du costé des Catholiques, qu’elle fust contrainte d’y demeurer dix-huit mois&#160;; et,
+en estant faschée, elle vouloit quelquefois attribuer que cela se faisait 
+artificieusement pour voir plus longtemps ses filles, pour ce que
+le Roy, mon mary, estoit devenu fort amoureux de Dayelle, et <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de 
+Thurene de La Vergne&#160;; ce qui n’empeschoit point que je ne reçeusse 
+beaucoup d’honneur et d’amitié du Roy, qui m’en tesmoignait 
+aultant que j’en eusse peu désirer.&#160;»
+</p><p>Il est donc bien avéré, sans aller plus loin, que le Roi de Navarre,
+dédaignant <choice><abbr>Mme</abbr><expan xml:lang="fr">Madame</expan></choice>&#160;de Sauves, brûlait d’amour pour Dayelle, la belle
+Grecque, échappée miraculeusement d’après d’Aubigné au sac de
+Chypre en 1571 et sœur de l’historien Davila&#160;; que Turenne n’avait
+des yeux que pour Mademoiselle de La Vergne ou de La Vernay,
+comme l’écrit Castelnau, toutes deux demoiselles d’honneur de <persName ref="wdt:Q131552">Catherine</persName>&#160;;
+que <persName ref="wdt:Q220845">Marguerite</persName>, oubliant les absents et les morts, Henri de Guise,
+La Mole, Bussy, semblait se rapprocher de Turenne&#160;; que <persName ref="wdt:Q3121749">Pibrac</persName>
+enfin, «&#160;ce vieux fou de <persName ref="wdt:Q3121749">Pibrac</persName>&#160;», ne craignait point, malgré ses cheveux 
+blancs, de se jeter aux pieds de <persName ref="wdt:Q220845">Marguerite</persName> «&#160;qui ne le regardait
+même pas.&#160;» <persName ref="wdt:Q220845">Marguerite</persName> est l’âme de toutes ces fêtes. C’est elle qui
+préside au bal, qui mène la danse, qui organise les collations, répondant 
+ainsi aux secrets désirs de sa mère, la rusée Florentine. Aussi
+un de nos plus aimables poètes a-t-il pu avec raison s’écrier&#160;:
+</p>
+<p>
+<l>Quel désastre à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>&#160;! Ces yeux d’enchanteresses,</l>
+<l>Comme neige au soleil, fondirent tous les cœurs&#160;;</l>
+<l>Vénus, comme toujours, y vainquit les vainqueurs.</l>
+<l>Mars désarmé baissa le front sous les caresses</l>
+<l>De la grecque Dayelle, et Fosseuse et Rebours</l>
+<l>Firent de son grand casque un nid pour les amours.&#160;»</l>
+</p>
+<p><persName ref="wdt:Q936976">Henri de Navarre</persName> du reste ne négligeait rien pour rendre le séjour
+de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> agréable aux deux Reines et à leur suite. Les livres des comptes, 
+à l’article dépenses, conservés à Pau, nous édifient pleinement
+à ce sujet. «&#160;Il paie <measure type="currency" quantity="138" unit="livre">138</measure> livres à maître François Geoffrion, son apothicaire, 
+pour l’achat d’un tonneau de vin de Graves, pris à <placeName type="itineraire" ref="wdt:Q1479">Bordeaux</placeName>,
+et l’avoir fait mettre en bouteilles et apporter à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, pour servir
+aux festins faits par S. M. aux Reines.&#160;» 
+</p><p>«&#160;Idem, au sieur d’Espalungue, écuyer de son écurie, <measure type="currency" quantity="500" unit="livre">500 l.</measure> <measure type="currency" quantity="13" unit="sol">13
+sols t.</measure> pour onzes pipes de vin blanc et clairet, achetées à La Réole
+pour la venue des Reines.&#160;»
+</p><p>«&#160;A Jehan de Lignac, chasseur, demeurant à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, <measure type="currency" quantity="13" unit="livre">13 l.</measure> <measure type="currency" quantity="6" unit="sol">6 s.</measure> pour
+50 perdrix vives, 46 cailles, 8 tourtres, 12 palombes et un épervier
+que S. M. a achetés.&#160;»
+</p><p>«&#160;A François Du Vignau, l’un des jardiniers du Roy ès jardins du
+château de Pau, <measure type="currency" quantity="50" unit="livre tournoi">50 l. t.</measure> pour faire porter de Pau à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> des pavies, 
+pêches, poires et autres fruits, en deux voiages.&#160;»
+</p><p>«&#160;Puis, c’est un don de <measure type="currency" quantity="25" unit="écu">25 écus</measure> à des joueurs de violon&#160;; de «&#160;<measure type="currency" quantity="35" unit="écu">35 écus</measure>
+à Masimiano Milanino, chef de la compagnie des comédiens italiens,
+qui suivent le Roi&#160;; à Guillaume Meret <measure type="currency" quantity="6" unit="livre">6 l.</measure> 10 pour aller et
+retour de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> à Pau, chercher du beurre frais et des milhas pour
+servir aux festins faits par S. M. aux Reines&#160;; à divers habitants de
+<placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, <measure type="currency" quantity="44" unit="livre">44 l.</measure> <measure type="currency" quantity="19" unit="sol tournoi">19 s. t.</measure> pour louage de chevaux qui avaient esté prins
+pour porter et conduire les Italiens, joueurs de comédies, par ordre
+du Roy, durant les festins, à la Vénerie et arrivée de la Reyne-Mère,
+du Roy et de la Reyne, nostre maitresse.&#160;»
+</p><p>Et toujours «&#160;à Jehan Perichot, sommelier de panneterie, <measure type="currency" quantity="7" unit="livre">7 l.</measure> <measure type="currency" quantity="5" unit="sol tournoi">5 s. t.</measure>
+pour deux douzaines de grands couteaux achetés pour servir aux
+festins que S. M. donna à la <persName ref="wdt:Q131552">Reine-Mère</persName> et aux dames et filles de sa
+suite, durant le mois de février.&#160;» Enfin «&#160;à Bertrand, laquais du
+Roy, <measure type="currency" quantity="43" unit="sol">43 s.</measure> <measure type="currency" quantity="6" unit="denier tournoi">6 d. t.</measure> pour sa dépense et celle de quatre de ses compagnons, 
+étant allé conduire la Reine, nostre maitresse, du <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName> 
+à <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>&#160;» et, dépense caractéristique, «&#160;le 7 février
+1579, le Roy étant chez Madame et chez les filles, deux boîtes de
+massepains, <measure type="currency" quantity="3" unit="écu">3 écus</measure>, <measure type="currency" quantity="15" unit="sol tournoi">15 sols t.</measure>&#160;; une boite de massepains à <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de Roquelaure
+pour porter chez les filles&#160;; pour le Roy, douzes onces de
+sucre pour les filles de la <persName ref="wdt:Q131552">Reine-Mère</persName>, pour leur faire de l’eau sucrée&#160;; 
+massepains pour elles, au sortir du bal&#160;; enfin, détail plus caractéristique 
+encore, le 11 mars, par ordre du Roi, pour <choice><abbr>Mlle</abbr><expan xml:lang="fr">Mademoiselle</expan></choice>&#160;Fousuze 
+(<hi rend="italic">sic</hi>), une fiole de sirop de capillaire et jumbe par l’ordonnance
+de <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;de la Magdaleine, un sirop somnifère, conserves de roses,
+sucre candi, etc.&#160;»
+</p><p>Mais n’anticipons pas. 
+</p><p>Nous avons laissé les deux Reines à <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> le dimanche 21 décembre.
+Elles en partirent le lendemain 22 pour le <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>. Bien que
+les livres de comptes de <persName ref="wdt:Q220845">Marguerite</persName> contiennent une lacune jusqu’au
+1<hi rend="sup">er</hi> janvier suivant et que nous ne puissions ainsi préciser d’une
+façon absolue quel fut son itinéraire durant ces quinze derniers jours
+de l’année 1578, les lettres de sa mère sont assez explicites pour nous
+permettre d’affirmer non seulement qu’elle la suivit au Port avec
+une partie de son train, mais qu’elle ne la quitta même pas de tout
+ce mois de décembre.
+</p><p>Du 22 au 31 décembre, séjour au <placeName type="itineraire" ref="wdt:Q1164132">Port-Saincte-Marie</placeName>.
+</p><p>Le départ de la <persName ref="wdt:Q220845">Reine de Navarre</persName>, suivant sa mère au <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>,
+est précisé par cette lettre de Pinart au Roi, datée de cette
+dernière ville. «&#160;Le sieur Pinart mande au Roi que la Reyne sa
+mère et la Reyne de Navarre sont parties de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> et sont arrivées
+au <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>.&#160;»
+</p><p><persName ref="wdt:Q131552">Catherine</persName> ne voulait et ne pouvait point rester dans <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, ville
+huguenote, pour les fêtes de Noël. Elle choisit le <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>,
+aussi bien pour faire librement ses dévotions ce jour-là qu’avec
+l’espoir que ce serait dans ce lieu ou tout autre voisin, mais jamais à
+<placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName>, que se tiendrait la conférence.
+</p><p>«&#160;Il y a, écrit-elle à son fils le jour de la feste de Noël, une petite
+abbaye de religieuses qui est tout icy contre, mais de-là la rivière de
+la Garonne, où nous pourrions nous assembler, si leurs dépputez
+font difficulté de venir en cette ville. Je pense en avoir response
+avant disner, et peut-estre que mondict fils le <persName ref="wdt:Q936976">roi de Navarre</persName>, à ce
+que m’a dict ma dicte fille, pourra venir icy à disner, afin que nous
+nous résouldions du lieu et du jour&#160;; car ils n’ont plus d’excuses et
+ne sçauroient avec que raisons davantaige prolonger, estans tous
+leurs dictz députez arrivez, ou ce qui reste à venir sera icy demayn.&#160;»
+</p><p><persName ref="wdt:Q131552">Catherine</persName> fait allusion dans cette lettre au prieuré du Paravis, situé
+sur la rive gauche de la Garonne, dans la plaine, en face du <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>,
+qui était un couvent de filles nobles de l’ordre de
+<placeName type="itineraire" ref="wdt:Q632276">Fontevrault</placeName>. Fondé en 1130 par Amalvin de Paradis et sa femme
+Onor, sous l’épiscopat de Raymond Bernard du Fossat, ce monastère prospéra jusqu’à la Révolution. Il n’en reste plus aujourd’hui que
+l’église, vaisseau roman du <hi rend="sc">xii</hi><hi rend="sup">e</hi> siècle, de 47 mètres de long sur 9 de
+large à l’intérieur, une partie des cloitres, refaits en 1604 après les
+dévastations commises par les troupes protestantes du capitaine Marchastel 
+en septembre 1569, et, sans doute grâce aux libéralités
+de <persName ref="wdt:Q131552">Catherine</persName> qui semble l’avoir affectionné tout particulièrement,
+quelques autres constructions appropriées aux besoins modernes. L’inventaire 
+des titres du couvent du Paravis, qui attend encore son historien,
+gros registre in-folio d’une réelle importance, a été retrouvé
+naguère dans une maison du <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName> et acheté pour la
+bibliothèque départementale de Lot-et-Garonne.
+</p><p>Dans sa remarquable Introduction au tome <hi rend="sc">vi</hi> des <hi rend="italic">Lettres de <persName ref="wdt:Q131552">Catherine
+de Médicis</persName></hi> , p. <hi rend="sc">xii</hi>, <choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;le comte Baguenault de Puchesse écrit
+sur la foi d’un simple renseignement, fourni par notre regretté collègue 
+<choice><abbr>M.</abbr><expan xml:lang="fr">Monsieur</expan></choice>&#160;Ph. Tamizey de Larroque, que pendant tout son séjour au
+Port, c’est-à-dire durant six semaines entières, <persName ref="wdt:Q131552">Catherine</persName> logea au
+couvent du Paravis. Nous croyons cette <choice><sic>assertions</sic><corr>assertion</corr></choice> erronée. Toutes les
+lettres de <persName ref="wdt:Q131552">Catherine</persName>, à cette époque, sont en effet datées, non du
+Paravis, mais du <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName>. Le Paravis était en outre sur la
+rive gauche, c’est-à-dire en Gascogne&#160;; le <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName> sur la rive
+droite, en <placeName type="itineraire" ref="wdt:Q6625">Agen</placeName>ais, c’est-à-dire dans le domaine de sa fille. Au Port,
+<persName ref="wdt:Q131552">Catherine</persName> était chez elle&#160;; au Paravis, elle aurait été plutôt chez son
+gendre. De plus, avec toute sa suite, aurait-elle pu se loger dans un
+monastère relativement petit et déjà entièrement occupé par les religieuses&#160;?
+Nous croyons donc que durant ces six semaines la ReineMère 
+et sa fille logèrent au <placeName type="itineraire" ref="wdt:Q1164132">Port-Sainte-Marie</placeName> même, et s’il fallait leur
+assigner une maison plutôt une autre, nous pencherions pour le
+fort de Balan, vieux logis sur les bords mêmes du fleuve, qui passait,
+il y a quelques années encore avant d’être en partie détruit, pour
+avoir servi de tout temps à recevoir les hôtes illustres.
+</p><p>Malgré les visites presque quotidiennes du <persName ref="wdt:Q936976">roi de Navarre</persName>, les négociations 
+n’étaient pas près d’aboutir. Elles étaient arrêtées par de
+continuelles complications, telles que l’affaire de Lauzerte, celle de
+Périgueux, la prise de Langon par les catholiques pour venger le meurtre du capitaine La Salle du Siron, un des leurs, par les habitants
+presque tous huguenots, et surtout l’affaire de La Réole, toujours en
+suspens.
+</p><p><placeName type="itineraire" ref="wdt:Q209802">Condom</placeName> cependant avait été pacifié. «&#160;Je disposé si bien les choses,
+«&#160;écrit <persName ref="wdt:Q131552">Catherine</persName> à son fils, quand j’y feust et despuis j’ay escript si
+fréquemment pour les faire vivre en paix, puisque les deux lieutenans 
+en estoient sorty, que lesdits habitans se sont accordez d’observer 
+ung ordre duquel je vous envoi le double et que le sieur
+de Saint-Orens que j’y ay laissé, le chevalier de Montluc et les autres 
+gentiĺzhommes et habitans ont signé.&#160;»
+</p><p>Un grand conseil est tenu au Port, le 26 décembre, «&#160;où estoient le
+<persName ref="wdt:Q936976">Roy de Navarre</persName>, le vicomte de Turenne, Guitry et Segur&#160;» et du
+côté de la <persName ref="wdt:Q131552">Reine-Mère</persName>, sa fille et tous ceulx du conseil. Les affaires de
+Langon, de <placeName type="itineraire" ref="wdt:Q263456">la Réole</placeName>, en ont fait les frais&#160;; et il a été décidé en outre
+qu’on choisirait <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> comme lieu de la conférence. «&#160;Car, si l’on
+parloit de changer ledict lieu de <placeName type="itineraire" ref="wdt:Q210769">Nérac</placeName> avant que lesdicts députez y
+fussent arrivez, il y auroit danger, entendant ces nouvelles, qu’ilz
+s’en retournassent&#160;; ce qui m’a faict taire,&#160;» écrit mélancoliquement
+<persName ref="wdt:Q131552">Catherine</persName>. Et elle ajoute&#160;:
+</p><p>«&#160;Excusez-moy, si je ne vous escriptz pour ceste heure de ma
+mayn&#160;; car j’ay mon mal de bras que m’avez veu quelquefois, qui
+me descend jusques sur la main que j’en ay enflée. Mais j’espère
+pourtant d’en estre bientost de tout guérye.
+</p><p>La patience de la <persName ref="wdt:Q131552">Reine-Mère</persName> est extrême&#160;; et il n’est pas de choses
+qu’elle ne fasse pour asseoir la paix. «&#160;Il y a beaucoup de leur costé, aussy 
+bien que du nostre, qui font tout ce qu’ils peuvent pour nous troubler. 
+Toustefois, je persévère tousiours pour surmonter tout cela.&#160;»
+</p><p>Là est sa vraie politique. Elle ne voit rien en ce moment que le
+bonheur du Royaume&#160;; elle ne négocie que pour l’intérêt de ses sujets.
+</p><p>Ainsi se passa cette fin de l’année 1578, chaque parti gardant ses
+positions, mais le Roi de Navarre d’un côté, la <persName ref="wdt:Q131552">Reine-Mère</persName> de l’autre,
+n’épargnant aucune peine pour arriver à la solution tant désirée. 
+</p>
+</text>
+</TEI>
 </textarea>
     <br>
     <input class="cache" id="geocoder" type="button" value="Géocoder ce texte !">
@@ -501,26 +1809,32 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
 
             document.querySelector("#sourceHtml").innerHTML = document.querySelector("#source").value.replace(/<head/g,"<h4").replace(/<\/head>/g,"</h4>").replace(/<titlePart/g,"<h3").replace(/<\/titlePart>/g,"</h3>");
             var geonames = {};
-            var wikipedia = {};
+            var wikidata = {};
 
-            // Get all links to Wikipedia or geonames pages
+            // Get all refs to wikidata or geonames pages in placeName tags
             // => have a : in second position
             document.querySelectorAll("placeName").forEach(e => {
                 let title = e.getAttribute("ref");
                 if (title != null && title.replace(":", "").length < title.length) {
                     let name = title.substring(title.indexOf(":") + 1);
-                    console.log(title.substring(0, title.indexOf(":") + 1))
-                    // Link to a geonames element
+                    // console.log(title.substring(0, title.indexOf(":") + 1))
+                    // Ref to a geonames element
                     if (title.substring(0, title.indexOf(":")) == "geo" && !(name in geonames)) {
                         geonames[name] = {};
-                        console.log(name)
+                        //console.log(name)
                     }
+                    // Ref to a wikidata element
+                    if (title.substring(0, title.indexOf(":")) == "wdt" && !(name in wikidata)) {
+                        wikidata[name] = {};
+                        //console.log(name)
+                    }
+                    
                 }
             });
 
 
             // Get wikidata elements from geonames ids
-            geonamesToWikidata(geonames, {})
+            geonamesToWikidata(geonames, wikidata)
 
         });
     });
