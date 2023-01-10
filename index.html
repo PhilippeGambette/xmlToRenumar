@@ -1628,6 +1628,8 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             document.querySelector("#sourceHtml").remove();
             document.querySelector("#textDiv").innerHTML = "<h2>Texte</h2>" + texte.replace(/"\/wiki/gi, "http://fr.wikisource.org/wiki").replace(/src="\/\/upload.wikimedia.org/gi, 'src="https://upload.wikimedia.org');
             document.querySelectorAll("orig").forEach(e=>{e.remove();})
+            document.querySelectorAll("sic").forEach(e=>{e.remove();})
+            document.querySelectorAll("expan").forEach(e=>{e.remove();})
             document.querySelectorAll("date").forEach(e=>{e.setAttribute("title",e.getAttribute("when"));})
 
         });
