@@ -40,6 +40,18 @@
         persName{
             background-color: sandybrown;
         }
+        
+        orig,sic,expan{
+            display:none;
+        }
+        
+        table{
+            border-collapse: collapse;
+        }
+        td,th{
+            border:1px solid gray;
+            padding:2px;
+        }
 
         fw[type="pageNum"]{
             width:2em;
@@ -1459,6 +1471,7 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
 </TEI>
 </textarea>
     <br>
+    <label for="field">Extraire les infos des balises : </label><input type="text" id="field" value="placeName"><br>
     <input class="cache" id="geocoder" type="button" value="Géocoder ce texte !">
     <br>
     <main>
@@ -1466,13 +1479,19 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
     <div class="cache" id="sourceHtml"></div>
     <div id="mapDiv" class="cache">
         <h2>Carte</h2>
+        <a id="mapDownload" href="">Télécharger les données de la carte</a>
         <div id="map"></div>
     </div>
     <div id="galleryDiv" class="cache">
         <h2>Galerie</h2>
+        <a id="peopleDownload" href="">Télécharger les données sur la galerie de personnes</a><br>
     </div>
     <div id="textDiv" class="cache">
         <h2>Texte</h2>
+    </div>
+    <div id="dataDiv" class="cache">
+        <h2>Données d'une balise</h2>
+        <a id="dataDownload" href="">Télécharger les données relatives à cette balise</a>
     </div>
     <footer>
         <h2>Crédits</h2>
@@ -1482,6 +1501,8 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
     </footer>
 </body>
 <script>
+let mapData = [];
+let peopleData = [];
 
     //=================================================
     //Code in the block below from https://stackoverflow.com/questions/45309447/calculating-median-javascript
@@ -1498,6 +1519,72 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
     //=================================================
 
 
+/************************************/
+/* code below used to download the CSV file
+/* derived from the code by A.H. Bitubekk
+/* from https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
+/************************************/
+
+function launchDownload(result, dataType){
+   // CSV file
+   var csvContent = '';
+   
+   // Building the CSV from the Data two-dimensional array
+   // Each column is separated by ";" and new line "\n" for next row
+   result.forEach(function(infoArray,index) {
+      var dString = "";
+      infoArray.forEach(function(str){
+         if(str==undefined){
+            str="";
+         } else {
+            str=""+str;
+         }
+         dString += '"'+str.replace(/"/g,'""')+'";';
+      })
+      csvContent += index < result.length ? dString + '\n' : dString;
+   });
+   
+   // Build date
+   var m = new Date(Date.now()).getMonth()+1;
+   if(m<10){
+      m="0"+m;
+   }
+   var d = new Date(Date.now()).getDate();
+   if(d<10){
+      d="0"+d;
+   }
+   var date = new Date(Date.now()).getFullYear()+"-"+m+"-"+d+"_"+new Date(Date.now()).getHours()+"h"+new Date(Date.now()).getMinutes();
+   
+   // Save file
+   download(csvContent, 'download-'+dataType+"-"+date+'.csv', 'text/csv;encoding:utf-8');
+}
+
+// The download function takes a CSV string, the filename and mimeType as parameters
+// Scroll/look down at the bottom of this snippet to see how download is called
+function download(content, fileName, mimeType) {
+  var a = document.createElement('a');
+  mimeType = mimeType || 'application/octet-stream';
+
+  if (navigator.msSaveBlob) { // IE10
+    navigator.msSaveBlob(new Blob([content], {
+      type: mimeType
+    }), fileName);
+  } else if (URL && 'download' in a) { //html5 A[download]
+    a.href = URL.createObjectURL(new Blob([content], {
+      type: mimeType
+    }));
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+  }
+}
+/************************************/
+
+
+
 
 
     //=================================================
@@ -1508,7 +1595,7 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
             //pages += `"${page}"@fr\n`;
             pages += `<http://www.wikidata.org/entity/${page}>\n`
         })
-        console.log(pages)
+        //console.log(pages)
 
         let sparqlQuery = `#Informations correspondant aux identifiants wikidata
 SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
@@ -1536,32 +1623,39 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             let latitude = [];
             let longitude = [];
 
-            // Gallery creation
+            // Gallery and map creation
             document.querySelector("#galleryDiv").classList.remove("cache");
-            document.querySelector("#galleryDiv").innerHTML = "<h2>Gallerie</h2>"
-
+            document.querySelector("#galleryDiv").innerHTML = "<h2>Galerie</h2>"
+            + '<a id="peopleDownload" href="">Télécharger les données sur la galerie de personnes</a><br>';
+            
+            mapData.push(["wikidataId","label","link","image","lat","long"])
+            peopleData.push(["wikidataId","label","link","image"])
             // Get wikidata info corresponding to geonames links
             data.results.bindings.forEach(result => {
                 let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
                 //console.log(result)
                 // if the wikidata element has a picture, save its infos for later
+                let picture = "";
                 if (result.picture != undefined) {
                     if (!(wikidataId in wikidata)) {
                         wikidata[wikidataId] = {};
-                        console.log("ok" + wikidataId)
+                        //console.log("ok" + wikidataId)
                     }
                     //console.log(wikidata)
                     //console.log(wikidataId)
                     //console.log(wikidata[wikidataId])
                     wikidata[wikidataId].image = result.picture.value;
-                    if("lemma" in result){
-                       wikidata[wikidataId].wikipedia = "http://fr.wikipedia.org/wiki/" + result.lemma.value;
-                    } else {
-                       wikidata[wikidataId].wikipedia = "http://www.wikidata.org/entity/" + wikidataId;
-                    }
-                    //wikipedia[result.lemma.value].wikidata = wikidataId;
                 }
+
+                if("lemma" in result){
+                    wikidata[wikidataId].wikipedia = "http://fr.wikipedia.org/wiki/" + result.lemma.value;
+                } else {
+                    wikidata[wikidataId].wikipedia = "http://www.wikidata.org/entity/" + wikidataId;
+                }
+                //wikipedia[result.lemma.value].wikidata = wikidataId;
+                
                 if (result.coordinates == null) {
+                    // Add element to the gallery of people
                     if (result.picture != null) {
                         document.querySelector("#galleryDiv").innerHTML+=" <a></a>";
                         document.querySelector("#galleryDiv").lastElementChild.appendChild(document.createElement("img"));
@@ -1570,24 +1664,38 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                         document.querySelector("#galleryDiv").lastElementChild.setAttribute("title", result.itemLabel.value);
                         document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("src", result.picture.value);
                         document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("alt", result.itemLabel.value);
+                        picture = result.picture.value;
                     }
+                    peopleData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture]);
                 } else {
+                    // Add element to the map
                     // Extract coordinates
-                    console.log(result.coordinates.value);
+                    //console.log(result.coordinates.value);
                     let coord = /Point\(([-]*[0-9]*[.][0-9]*) ([-]*[0-9]*[.][0-9]*)\)/i.exec(result.coordinates.value)
 
                     if ("picture" in result) {
                         markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value, result.picture.value]);
+                        picture = result.picture.value;
                     } else {
                         markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
                     }
 
                     longitude.push(parseFloat(coord[1]));
                     latitude.push(parseFloat(coord[2]));
-
+                    // Prepare the download of the data
+                    mapData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture, parseFloat(coord[2]), parseFloat(coord[1])]);
                 }
             })
             // End of wikidata result processing
+            
+            // Add a download link for the gallery
+            document.querySelector("#peopleDownload").addEventListener("click",function(e){
+               // Download the table containing the results
+               e.preventDefault();
+               launchDownload(peopleData, "persName");
+            })
+
+
 
             // Add tooltips to the text
             document.querySelectorAll("persName").forEach(e => {
@@ -1627,10 +1735,56 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
 
             document.querySelector("#sourceHtml").remove();
             document.querySelector("#textDiv").innerHTML = "<h2>Texte</h2>" + texte.replace(/"\/wiki/gi, "http://fr.wikisource.org/wiki").replace(/src="\/\/upload.wikimedia.org/gi, 'src="https://upload.wikimedia.org');
+            /*
             document.querySelectorAll("orig").forEach(e=>{e.remove();})
             document.querySelectorAll("sic").forEach(e=>{e.remove();})
             document.querySelectorAll("expan").forEach(e=>{e.remove();})
+            */
             document.querySelectorAll("date").forEach(e=>{e.setAttribute("title",e.getAttribute("when"));})
+            
+            
+            // Display the data
+            document.querySelector("#dataDiv").classList.remove("cache");
+            // Get all tags from the required field in the text
+            let field = document.querySelector("#field").value
+            document.querySelector("#dataDiv h2").innerHTML = "Données de la balise <tt>" + field + "</tt>";
+            
+            // First get all the possible attributes
+            let attributes = {};
+            document.querySelector("#textDiv").querySelectorAll(field).forEach(function(element){
+               element.getAttributeNames().forEach(function(a){
+                  if(!(a in attributes)){
+                     attributes[a] = "";
+                  }
+               })
+            })
+            console.log(attributes);
+            let tagData = [];
+            tagHTML = "";
+            attributeList = Object.keys(attributes)
+            tagData.push(["contenu de la balise"].concat(attributeList));
+            tagHTML += "<tr><th>contenu de la balise</th><th>"+attributeList.join("</th><th>")+"</th></tr>";
+            
+            document.querySelector("#textDiv").querySelectorAll(field).forEach(function(element){
+               newTag = [element.innerHTML]
+               attributeList.forEach(function(a){
+                  if(element.getAttributeNames().includes(a)){
+                     newTag.push(element.getAttribute(a));
+                  } else {
+                     newTag.push("");
+                  }
+               })
+               tagData.push(newTag);
+               tagHTML += "<tr><td>"+newTag.join("</td><td>")+"</td></tr>";
+            })
+            document.querySelector("#dataDiv").innerHTML += "<table>"+tagHTML+"</table>";
+            //console.log(tagData)
+            
+            // Download the table containing the data
+            document.querySelector("#dataDownload").addEventListener("click",function(e){
+               e.preventDefault();
+               launchDownload(tagData, field);
+            })
 
         });
 
@@ -1647,7 +1801,7 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
         Object.keys(viaf).forEach(page => {
             pages += '"' + page + '"\n';
         })
-        console.log(pages)
+        //console.log(pages)
         let sparqlQuery = `#Éléments Wikidata correspondant aux identifiants viaf
 SELECT ?viaf ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
   VALUES ?viaf {
@@ -1659,7 +1813,7 @@ SELECT ?viaf ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
         console.log(sparqlQuery);
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
         queryDispatcher.query(sparqlQuery).then(data => {
-            console.log(data.results.bindings);
+            //console.log(data.results.bindings);
             data.results.bindings.forEach(result => {
                 let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
                 wikidata[wikidataId] = {}
@@ -1671,7 +1825,7 @@ SELECT ?viaf ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                 let title = e.getAttribute("ref");
                 if (title != null && title.replace(":", "").length < title.length) {
                     let name = title.substring(title.indexOf(":") + 1);
-                    console.log(title.substring(0, title.indexOf(":") + 1))
+                    //console.log(title.substring(0, title.indexOf(":") + 1))
                     // Link to a wikidata element
                     if (title.substring(0, title.indexOf(":")) == "wdt" && !(name in wikidata)) {
                         wikidata[name] = {};
@@ -1807,7 +1961,12 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
         document.querySelector("#preloader").classList.add("cache");
         document.querySelector("#source").classList.remove("cache");
         document.querySelector("#geocoder").classList.remove("cache");
+        
+        // The user just clicked on the geocoding button
         document.querySelector("#geocoder").addEventListener("click", e => {
+            document.querySelector("#source").disabled=true;
+            mapData = [];
+            peopleData = [];
 
             document.querySelector("#sourceHtml").innerHTML = document.querySelector("#source").value.replace(/<head/g,"<h4").replace(/<\/head>/g,"</h4>").replace(/<titlePart/g,"<h3").replace(/<\/titlePart>/g,"</h3>");
             var geonames = {};
@@ -1837,9 +1996,22 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
 
             // Get wikidata elements from geonames ids
             geonamesToWikidata(geonames, wikidata)
+            
 
         });
+
+
+// Download the table containing the results
+document.querySelector("#mapDownload").addEventListener("click",function(e){
+   e.preventDefault();
+   launchDownload(mapData, "placeName");
+})
+
+
+
+
     });
+    
 </script>
 
 </html>
