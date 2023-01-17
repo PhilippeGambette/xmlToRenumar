@@ -34,11 +34,11 @@
         }
 
         placeName{
-            background-color:darkseagreen;
+            background-color: #D8F6CE;
         }
 
         persName{
-            background-color: sandybrown;
+            background-color: #D8CEF6;
         }
         
         orig,sic,expan{
@@ -1503,6 +1503,7 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
 <script>
 let mapData = [];
 let peopleData = [];
+let label = {};
 
     //=================================================
     //Code in the block below from https://stackoverflow.com/questions/45309447/calculating-median-javascript
@@ -1634,6 +1635,10 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             data.results.bindings.forEach(result => {
                 let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
                 //console.log(result)
+                label[wikidataId] = ""
+                if(result.itemLabel != undefined){
+                   label[wikidataId] = result.itemLabel.value
+                }
                 // if the wikidata element has a picture, save its infos for later
                 let picture = "";
                 if (result.picture != undefined) {
@@ -1696,22 +1701,6 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             })
 
 
-
-            // Add tooltips to the text
-            document.querySelectorAll("persName").forEach(e => {
-                let title = e.getAttribute("title");
-                if (title != null && title[1] == ":") {
-                    let name = title.substring(2);
-                    // Link to a Wikipedia page
-                    if (title[0] == "w") {
-                        if ((name in wikipedia) && (wikipedia[name].wikidata in wikidata)) {
-                            e.setAttribute("class", "tooltip");
-                            e.innerHTML = e.innerHTML + `<em><span></span><b>${name}</b><br><img src="${wikidata[wikipedia[name].wikidata].image}" alt="${name}"></em>`;
-                        }
-                    }
-                }
-            });
-
             // Code in the block below from https://leafletjs.com/
             var map = L.map('map').setView([median(latitude), median(longitude)], 10);
 
@@ -1742,6 +1731,31 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             */
             document.querySelectorAll("date").forEach(e=>{e.setAttribute("title",e.getAttribute("when"));})
             
+            
+            
+            
+            // Add tooltips to the text
+            document.querySelectorAll("persName,placeName,rs").forEach(e => {
+                let title = e.getAttribute("ref");
+                if((title != undefined) && (title.substring(0,4) == "wdt:")){
+                   let wikidataId = title.split(":")[1];
+                   e.outerHTML = '<a target="_blank" href="https://www.wikidata.org/wiki/'+wikidataId+'" title="'+label[wikidataId]+'">'+e.outerHTML+'</a>';
+                }
+                /*
+                if (title != null && title[1] == ":") {
+                    let name = title.substring(2);
+                    // Link to a Wikipedia page
+                    if (title[0] == "w") {
+                        if ((name in wikipedia) && (wikipedia[name].wikidata in wikidata)) {
+                            e.setAttribute("class", "tooltip");
+                            e.innerHTML = e.innerHTML + `<em><span></span><b>${name}</b><br><img src="${wikidata[wikipedia[name].wikidata].image}" alt="${name}"></em>`;
+                        }
+                    }
+                }
+                */
+            });
+
+
             
             // Display the data
             document.querySelector("#dataDiv").classList.remove("cache");
@@ -1785,6 +1799,12 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                e.preventDefault();
                launchDownload(tagData, field);
             })
+            
+            
+            
+            
+            
+            
 
         });
 
@@ -1972,9 +1992,9 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             var geonames = {};
             var wikidata = {};
 
-            // Get all refs to wikidata or geonames pages in placeName tags
+            // Get all refs to wikidata or geonames pages in placeName or tags
             // => have a : in second position
-            document.querySelectorAll("placeName").forEach(e => {
+            document.querySelectorAll("placeName,rs").forEach(e => {
                 let title = e.getAttribute("ref");
                 if (title != null && title.replace(":", "").length < title.length) {
                     let name = title.substring(title.indexOf(":") + 1);
