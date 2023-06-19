@@ -1677,12 +1677,13 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                     // Extract coordinates
                     //console.log(result.coordinates.value);
                     let coord = /Point\(([-]*[0-9]*[.][0-9]*) ([-]*[0-9]*[.][0-9]*)\)/i.exec(result.coordinates.value)
-
-                    if ("picture" in result) {
+                    if (("itemLabel" in result) && (coord.length > 2)){
+                    if (("picture" in result)) {
                         markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value, result.picture.value]);
                         picture = result.picture.value;
                     } else {
                         markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
+                    }
                     }
 
                     longitude.push(parseFloat(coord[1]));
