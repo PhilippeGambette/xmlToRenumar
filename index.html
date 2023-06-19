@@ -1684,12 +1684,12 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                     } else {
                         markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
                     }
-                    }
 
                     longitude.push(parseFloat(coord[1]));
                     latitude.push(parseFloat(coord[2]));
                     // Prepare the download of the data
                     mapData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture, parseFloat(coord[2]), parseFloat(coord[1])]);
+                    }
                 }
             })
             // End of wikidata result processing
