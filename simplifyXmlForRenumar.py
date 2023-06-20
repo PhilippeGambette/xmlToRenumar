@@ -61,6 +61,8 @@ def displayNodeText(node, forbiddenTags, keptTags, parentTag, savingContent, sta
                   if attribute == "rend" and tagAttributes[attribute] == "sup":
                      openingTag += ' rend="exp"'
                   elif attribute == "ref" and tagAttributes[attribute][0:4] == "geo:":
+                  # todo : ajouter systématiquement l'attribut "ref" vide, supprimer la valeur xxx d'attribut "ref"
+                  # todo : si ref est rempli, on ne met pas l'attribut type
                      openingTag += ' ref="http://sws.geonames.org/' + tagAttributes[attribute][4:len(tagAttributes[attribute])] + '"'
                   elif attribute == "type":
                      pass
@@ -69,6 +71,7 @@ def displayNodeText(node, forbiddenTags, keptTags, parentTag, savingContent, sta
                text += openingTag + ">" + displayNodeText(child, forbiddenTags, keptTags, node.nodeName, savingContent, startingNode) + "</" + child.nodeName + ">"
             else:
                # Special cases with the date tag
+               # todo transformer la balise pb en [f° numéro_de_folio] (garder les pages blanches)
                if child.nodeName == "date":
                   if not(monthFound):
                      print(tagAttributes["when"])
@@ -76,6 +79,7 @@ def displayNodeText(node, forbiddenTags, keptTags, parentTag, savingContent, sta
                # Special cases with some tags
                if child.nodeName == "note" or child.nodeName == "label":
                   # Special case with tag note or label: they become margin notes
+                  # todo : déplacer la note au début de la balise <ab> où elle est placée (voir par exemple http://renumar.univ-tours.fr/xtf/view?docId=tei/TIPO642280.xml;chunk.id=n1;toc.depth=1;toc.id=n1;brand=default)
                   text += '<note place="margin">' + displayNodeText(child, forbiddenTags, keptTags, node.nodeName, savingContent, startingNode) + '<br/></note>'
                elif child.nodeName == "del":
                   # Special case with tag del

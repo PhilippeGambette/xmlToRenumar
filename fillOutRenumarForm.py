@@ -120,6 +120,7 @@ paragraphs = [
 ]
 
 inputText = open("Marguerite-frotte-Dufournaud.xml.renumar.txt", "r", encoding="utf-8")
+# todo : adapter le script pour qu'il puisse modifier des fiches existantes et pas juste ajouter les fiches
 currentParagraph = ""
 numParagraph = -1
 
@@ -169,10 +170,11 @@ for paragraph in paragraphs:
     name="analyseChk"
     # n1.44 -> n1.45 passage de 1543 à 1548
     # Prepare data to fill out the form
+    # todo : remplacer 
     data = {
       "#typeActe": "Compte",
       "#formeActe": "Registre particulier de comptes",
-      "#dateMinute_1": monthsInFrench[numParagraph].replace("d'","").replace("de ",""),
+      "#dateMinute_1": monthsInFrench[numParagraph].replace("d'","").replace("de ",""), #todo : code de date sous la forme 1549, [...] septembre
       "#dateMinuteNormalisee_1": date_norm + "-01",
       "#nomPrenomNotaire_1": "Marguerite de Navarre",
       "#villeNotaire": "", 
@@ -180,16 +182,15 @@ for paragraph in paragraphs:
       "#commentaireEdition_1": "Hector de La Ferrière-Percy Aubry, <hi rend=\"italic\">Marguerite d’Angoulême (sœur de Francois I.), son livre de dépenses (1540-1549), étude sur ses dernières années</hi>, 1862",
       "#prenomResponsableRevision_1": "Nicole",
       "#nomResponsableRevision_1": "Dufournaud",
-      "#paragAnalyse": "Version mise au propre du registre des comptes par Jehan de Frotté, « contrerolleur general et secrectaire des finances des Roy et Royne de Navarre », pour le mois " + monthsInFrench[numParagraph] + ".",
+      "#paragAnalyse": "Version mise au propre du registre des comptes par Jehan de Frotté, « contrerolleur general et secrectaire des finances des Roy et Royne de Navarre », pour le mois " + monthsInFrench[numParagraph] + ".", # todo : ajouter le lien vers l'URL de la première page chez BVH | cf http://form-tei.irht.cnrs.fr/manuscrit/affiche/id/642055
       "#paragTranscription": paragraphs[numParagraph],
       "#ville": "-",
       "#institution": "Collection particulière", 
-      "#cote": "XCollPriv_Frotte_0001",
-      
+      "#cote": "XCollPriv_Frotte_0001", # todo : commentaire de la cote " Version mise au propre du registre des comptes par Jehan de Frotté, « contrerolleur general et secrectaire des finances des Roy et Royne de Navarre ». Ce premier registre couvre la période allant de septembre 1540 à avril 1543 et de mars 1548 à août 1549. Le premier registre ..."      
     }
     print(data);
     # Fill in the text area fields of the form
-    driver.execute_script('$("#paragAnalyse").data("CodeMirrorInstance").toTextArea()')
+    driver.execute_script('$("#paragAnalyse").data("CodeMirrorInstance").toTextArea()') # todo : apparemment cette ligne ne fonctionne pas, voir comment la corriger
     driver.execute_script('$("#paragTranscription").data("CodeMirrorInstance").toTextArea()')
     # fill in the other fields of the form
     for d in data:
