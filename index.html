@@ -1801,7 +1801,7 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                tagData.push(newTag);
                tagHTML += "<tr><td>"+newTag.join("</td><td>")+"</td></tr>";
             })
-            document.querySelector("#dataDiv").innerHTML += "<table>" + tagHTML + "</table><p>Nombre de caractères dans le texte de la balise <tt>" + field + "</tt> : " + (document.querySelector("#textDiv").innerText.length-5) + "<br>Nombre de caractères dans le texte des balises : " + charactersInFields + " (" + (Math.round(10000*charactersInFields/(document.querySelector("#textDiv").innerText.length-5))/100) + " %)</p>";
+            document.querySelector("#dataDiv").innerHTML += "<table>" + tagHTML + "</table><p>Nombre de caractères dans le texte de la balise <tt>text</tt> : " + (document.querySelector("#textDiv").innerText.length-5) + "<br>Nombre de caractères dans le texte des balises <tt>" + field + "</tt> : " + charactersInFields + " (" + (Math.round(10000*charactersInFields/(document.querySelector("#textDiv").innerText.length-5))/100) + " %)</p>";
             //console.log(tagData)
             
             // Download the table containing the data
