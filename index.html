@@ -21,63 +21,67 @@
             ;
         }
 
-        div[type="entree"]{
-            margin-bottom:0.5em;
+        div[type="entree"] {
+            margin-bottom: 0.5em;
         }
 
         .clickable {
             cursor: pointer
         }
 
-        date{
-            background-color:antiquewhite;
+        date {
+            background-color: antiquewhite;
         }
 
-        placeName{
+        placeName {
             background-color: #D8F6CE;
         }
 
-        persName{
+        persName {
             background-color: #D8CEF6;
         }
-        
-        orig,sic,expan{
-            display:none;
-        }
-        
-        table{
-            border-collapse: collapse;
-        }
-        td,th{
-            border:1px solid gray;
-            padding:2px;
+
+        orig,
+        sic,
+        expan {
+            display: none;
         }
 
-        fw[type="pageNum"]{
-            width:2em;
-            height:2em;
-            padding:0.5em;
-            margin-right:1em;
-            float:left;
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid gray;
+            padding: 2px;
+        }
+
+        fw[type="pageNum"] {
+            width: 2em;
+            height: 2em;
+            padding: 0.5em;
+            margin-right: 1em;
+            float: left;
             text-align: center;
-            background-image:url("page.png");
+            background-image: url("page.png");
             background-size: contain;
             background-repeat: no-repeat;
         }
 
-        #textDiv{
-            width:50%;
-            margin:auto;
-            min-width:300px;
-            max-width:1000px;
+        #textDiv {
+            width: 50%;
+            margin: auto;
+            min-width: 300px;
+            max-width: 1000px;
         }
 
-        note{
-            float:left;
-            margin-right:20px;
-            width:40%;
-            padding:1em;
-            background-color:lightgray;
+        note {
+            float: left;
+            margin-right: 20px;
+            width: 40%;
+            padding: 1em;
+            background-color: lightgray;
         }
 
         #source {
@@ -93,7 +97,7 @@
             height: 200px;
         }
 
-        #galleryDiv{
+        #galleryDiv {
             text-align: center;
         }
 
@@ -150,8 +154,10 @@
 <body>
     <h1><img src="wd-geocoder.png" style="height:100px;margin-bottom:-20px;">XML-TEI Wikidata Geocoder</h1>
     <p>
-        Cette page propose d'extraire du code d'un fichier XML-TEI diverses informations sur les éléments persName et placeName, 
-        à partir de leur attribut ref si ce dernier contient un identifiant Geonames précédé de "geo:", un identifiant Wikidata précédé de "wdt:", un identifiant idref précédé de "idref:" ou un identifiant VIAF précédé de "viaf:" :
+        Cette page propose d'extraire du code d'un fichier XML-TEI diverses informations sur les éléments persName et
+        placeName,
+        à partir de leur attribut ref si ce dernier contient un identifiant Geonames précédé de "geo:", un identifiant
+        Wikidata précédé de "wdt:", un identifiant idref précédé de "idref:" ou un identifiant VIAF précédé de "viaf:" :
         coordonnées géographiques (afin de générer une carte), illustrations (afin de générer une galerie d'images).
         Le code source de cette page est mis à disposition dans <a
             href="https://github.com/PhilippeGambette/xmlToRenumar">ce dépôt GitHub</a>.
@@ -1501,9 +1507,12 @@ n’épargnant aucune peine pour arriver à la solution tant désirée.
     </footer>
 </body>
 <script>
-let mapData = [];
-let peopleData = [];
-let label = {};
+    let mapData = [];
+    let peopleData = [];
+    let label = {};
+    let wikidataIds = [];
+    let data = [];
+        
 
     //=================================================
     //Code in the block below from https://stackoverflow.com/questions/45309447/calculating-median-javascript
@@ -1520,83 +1529,288 @@ let label = {};
     //=================================================
 
 
-/************************************/
-/* code below used to download the CSV file
-/* derived from the code by A.H. Bitubekk
-/* from https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
-/************************************/
+    /************************************/
+    /* code below used to download the CSV file
+    /* derived from the code by A.H. Bitubekk
+    /* from https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
+    /************************************/
 
-function launchDownload(result, dataType){
-   // CSV file
-   var csvContent = '';
-   
-   // Building the CSV from the Data two-dimensional array
-   // Each column is separated by ";" and new line "\n" for next row
-   result.forEach(function(infoArray,index) {
-      var dString = "";
-      infoArray.forEach(function(str){
-         if(str==undefined){
-            str="";
-         } else {
-            str=""+str;
-         }
-         dString += '"'+str.replace(/"/g,'""')+'";';
-      })
-      csvContent += index < result.length ? dString + '\n' : dString;
-   });
-   
-   // Build date
-   var m = new Date(Date.now()).getMonth()+1;
-   if(m<10){
-      m="0"+m;
-   }
-   var d = new Date(Date.now()).getDate();
-   if(d<10){
-      d="0"+d;
-   }
-   var date = new Date(Date.now()).getFullYear()+"-"+m+"-"+d+"_"+new Date(Date.now()).getHours()+"h"+new Date(Date.now()).getMinutes();
-   
-   // Save file
-   download(csvContent, 'download-'+dataType+"-"+date+'.csv', 'text/csv;encoding:utf-8');
-}
+    function launchDownload(result, dataType) {
+        // CSV file
+        var csvContent = '';
 
-// The download function takes a CSV string, the filename and mimeType as parameters
-// Scroll/look down at the bottom of this snippet to see how download is called
-function download(content, fileName, mimeType) {
-  var a = document.createElement('a');
-  mimeType = mimeType || 'application/octet-stream';
+        // Building the CSV from the Data two-dimensional array
+        // Each column is separated by ";" and new line "\n" for next row
+        result.forEach(function (infoArray, index) {
+            var dString = "";
+            infoArray.forEach(function (str) {
+                if (str == undefined) {
+                    str = "";
+                } else {
+                    str = "" + str;
+                }
+                dString += '"' + str.replace(/"/g, '""') + '";';
+            })
+            csvContent += index < result.length ? dString + '\n' : dString;
+        });
 
-  if (navigator.msSaveBlob) { // IE10
-    navigator.msSaveBlob(new Blob([content], {
-      type: mimeType
-    }), fileName);
-  } else if (URL && 'download' in a) { //html5 A[download]
-    a.href = URL.createObjectURL(new Blob([content], {
-      type: mimeType
-    }));
-    a.setAttribute('download', fileName);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } else {
-    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
-  }
-}
-/************************************/
+        // Build date
+        var m = new Date(Date.now()).getMonth() + 1;
+        if (m < 10) {
+            m = "0" + m;
+        }
+        var d = new Date(Date.now()).getDate();
+        if (d < 10) {
+            d = "0" + d;
+        }
+        var date = new Date(Date.now()).getFullYear() + "-" + m + "-" + d + "_" + new Date(Date.now()).getHours() + "h" + new Date(Date.now()).getMinutes();
 
+        // Save file
+        download(csvContent, 'download-' + dataType + "-" + date + '.csv', 'text/csv;encoding:utf-8');
+    }
 
+    // The download function takes a CSV string, the filename and mimeType as parameters
+    // Scroll/look down at the bottom of this snippet to see how download is called
+    function download(content, fileName, mimeType) {
+        var a = document.createElement('a');
+        mimeType = mimeType || 'application/octet-stream';
+
+        if (navigator.msSaveBlob) { // IE10
+            navigator.msSaveBlob(new Blob([content], {
+                type: mimeType
+            }), fileName);
+        } else if (URL && 'download' in a) { //html5 A[download]
+            a.href = URL.createObjectURL(new Blob([content], {
+                type: mimeType
+            }));
+            a.setAttribute('download', fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+        }
+    }
+    /************************************/
 
 
+
+    function buildMapAndGallery(data) {
+        //console.log(data.results.bindings);
+        let wikidata={};
+
+        // Map creation
+        document.querySelector("#mapDiv").classList.remove("cache");
+        let markers = [];
+        let latitude = [];
+        let longitude = [];
+
+        // Gallery and map creation
+        document.querySelector("#galleryDiv").classList.remove("cache");
+        document.querySelector("#galleryDiv").innerHTML = "<h2>Galerie</h2>"
+            + '<a id="peopleDownload" href="">Télécharger les données sur la galerie de personnes</a><br>';
+
+        mapData.push(["wikidataId", "label", "link", "image", "lat", "long"])
+        peopleData.push(["wikidataId", "label", "link", "image"])
+        // Get wikidata info corresponding to geonames links
+        data.forEach(result => {
+            let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
+            //console.log(result)
+            label[wikidataId] = ""
+            if (result.itemLabel != undefined) {
+                label[wikidataId] = result.itemLabel.value
+            }
+
+            if (!(wikidataId in wikidata)) {
+                    wikidata[wikidataId] = {};
+                    //console.log("ok" + wikidataId)
+                }   
+
+            // if the wikidata element has a picture, save its infos for later
+            let picture = "";
+            if (result.picture != undefined) {
+
+                //console.log(wikidata)
+                //console.log(wikidataId)
+                //console.log(wikidata[wikidataId])
+                wikidata[wikidataId].image = result.picture.value;
+            }
+
+            if ("lemma" in result) {
+                wikidata[wikidataId].wikipedia = "http://fr.wikipedia.org/wiki/" + result.lemma.value;
+            } else {
+                wikidata[wikidataId].wikipedia = "http://www.wikidata.org/entity/" + wikidataId;
+            }
+            //wikipedia[result.lemma.value].wikidata = wikidataId;
+
+            if (result.coordinates == null) {
+                // Add element to the gallery of people
+                if (result.picture != null) {
+                    document.querySelector("#galleryDiv").innerHTML += " <a></a>";
+                    document.querySelector("#galleryDiv").lastElementChild.appendChild(document.createElement("img"));
+                    document.querySelector("#galleryDiv").lastElementChild.setAttribute("href", wikidata[wikidataId].wikipedia);
+                    document.querySelector("#galleryDiv").lastElementChild.setAttribute("target", "_blank");
+                    document.querySelector("#galleryDiv").lastElementChild.setAttribute("title", result.itemLabel.value);
+                    document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("src", result.picture.value);
+                    document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("alt", result.itemLabel.value);
+                    picture = result.picture.value;
+                }
+                peopleData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture]);
+            } else {
+                // Add element to the map
+                // Extract coordinates
+                //console.log(result.coordinates.value);
+                let coord = /Point\(([-]*[0-9]*[.][0-9]*) ([-]*[0-9]*[.][0-9]*)\)/i.exec(result.coordinates.value)
+                if (("itemLabel" in result) && (coord != null) && (coord.length > 2)) {
+                    if (("picture" in result)) {
+                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value, result.picture.value]);
+                        picture = result.picture.value;
+                    } else {
+                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
+                    }
+
+                    longitude.push(parseFloat(coord[1]));
+                    latitude.push(parseFloat(coord[2]));
+                    // Prepare the download of the data
+                    mapData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture, parseFloat(coord[2]), parseFloat(coord[1])]);
+                }
+            }
+        })
+        // End of wikidata result processing
+
+        // Add a download link for the gallery
+        document.querySelector("#peopleDownload").addEventListener("click", function (e) {
+            // Download the table containing the results
+            e.preventDefault();
+            launchDownload(peopleData, "persName");
+        })
+
+
+        let medLat = 0;
+        let medLong = 0;
+        if (latitude.length > 0) {
+            medLat = median(latitude);
+            medLong = median(longitude);
+        }
+
+        // Code in the block below from https://leafletjs.com/
+        var map = L.map('map').setView([medLat, medLong], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        markers.forEach(m => {
+            //console.log(m)
+            let image = "";
+            if (m.length > 3) {
+                image = `<img src="${m[3]}" alt="Image">`;
+            }
+            L.marker([m[1], m[0]]).addTo(map)
+                .bindPopup(`<h3>${m[2]}</h3>${image}`);
+        })
+
+        // Display the text
+        document.querySelector("#textDiv").classList.remove("cache");
+        let texte = document.querySelector("text").innerHTML;
+
+        document.querySelector("#sourceHtml").remove();
+        document.querySelector("#textDiv").innerHTML = "<h2>Texte</h2>" + texte.replace(/"\/wiki/gi, "http://fr.wikisource.org/wiki").replace(/src="\/\/upload.wikimedia.org/gi, 'src="https://upload.wikimedia.org');
+        /*
+        document.querySelectorAll("orig").forEach(e=>{e.remove();})
+        document.querySelectorAll("sic").forEach(e=>{e.remove();})
+        document.querySelectorAll("expan").forEach(e=>{e.remove();})
+        */
+        document.querySelectorAll("date").forEach(e => { e.setAttribute("title", e.getAttribute("when")); })
+
+
+
+
+        // Add tooltips to the text
+        document.querySelectorAll("persName,placeName,rs").forEach(e => {
+            let title = e.getAttribute("ref");
+            if ((title != undefined) && (title.substring(0, 4) == "wdt:")) {
+                let wikidataId = title.split(":")[1];
+                e.outerHTML = '<a target="_blank" href="https://www.wikidata.org/wiki/' + wikidataId + '" title="' + label[wikidataId] + '">' + e.outerHTML + '</a>';
+            }
+            /*
+            if (title != null && title[1] == ":") {
+                let name = title.substring(2);
+                // Link to a Wikipedia page
+                if (title[0] == "w") {
+                    if ((name in wikipedia) && (wikipedia[name].wikidata in wikidata)) {
+                        e.setAttribute("class", "tooltip");
+                        e.innerHTML = e.innerHTML + `<em><span></span><b>${name}</b><br><img src="${wikidata[wikipedia[name].wikidata].image}" alt="${name}"></em>`;
+                    }
+                }
+            }
+            */
+        });
+
+
+
+        // Display the data
+        document.querySelector("#dataDiv").classList.remove("cache");
+        // Get all tags from the required field in the text
+        let field = document.querySelector("#field").value
+        document.querySelector("#dataDiv h2").innerHTML = "Données de la balise <tt>" + field + "</tt>";
+
+        // First get all the possible attributes
+        let attributes = {};
+        document.querySelector("#textDiv").querySelectorAll(field).forEach(function (element) {
+            element.getAttributeNames().forEach(function (a) {
+                if (!(a in attributes)) {
+                    attributes[a] = "";
+                }
+            })
+        })
+        console.log(attributes);
+        let tagData = [];
+        tagHTML = "";
+        attributeList = Object.keys(attributes)
+        tagData.push(["contenu de la balise"].concat(attributeList));
+        tagHTML += "<tr><th>contenu de la balise</th><th>" + attributeList.join("</th><th>") + "</th></tr>";
+
+        charactersInFields = 0;
+        document.querySelector("#textDiv").querySelectorAll(field).forEach(function (element) {
+            charactersInFields += element.innerText.length;
+            newTag = [element.innerHTML]
+            attributeList.forEach(function (a) {
+                if (element.getAttributeNames().includes(a)) {
+                    newTag.push(element.getAttribute(a));
+                } else {
+                    newTag.push("");
+                }
+            })
+            tagData.push(newTag);
+            tagHTML += "<tr><td>" + newTag.join("</td><td>") + "</td></tr>";
+        })
+        document.querySelector("#dataDiv").innerHTML += "<table>" + tagHTML + "</table><p>Nombre de caractères dans le texte de la balise <tt>text</tt> : " + (document.querySelector("#textDiv").innerText.length - 5) + "<br>Nombre de caractères dans le texte des balises <tt>" + field + "</tt> : " + charactersInFields + " (" + (Math.round(10000 * charactersInFields / (document.querySelector("#textDiv").innerText.length - 5)) / 100) + " %)</p>";
+        //console.log(tagData)
+
+        // Download the table containing the data
+        document.querySelector("#dataDownload").addEventListener("click", function (e) {
+            e.preventDefault();
+            launchDownload(tagData, field);
+        })
+
+    }
 
     //=================================================
-    //Get the wikidata ids from the geonames ids
-    function buildMapAndGallery(wikidata) {
-        let pages = ""
-        Object.keys(wikidata).forEach(page => {
+    //Get information from the wikidata ids
+    function getWikidataInfo() {
+        let sampleSize = 0;
+
+        //while (wikidataIds.length > 0) {
+        let pages = "";
+        sampleSize = 0;
+        while ((wikidataIds.length > 0) && (sampleSize < 50)) {
+            sampleSize++;
             //pages += `"${page}"@fr\n`;
-            pages += `<http://www.wikidata.org/entity/${page}>\n`
-        })
-        //console.log(pages)
+            pages += `<http://www.wikidata.org/entity/${wikidataIds.shift()}>\n`
+        }
+
+        console.log(pages)
 
         let sparqlQuery = `#Informations correspondant aux identifiants wikidata
 SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
@@ -1615,210 +1829,21 @@ SELECT ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
         console.log("query with Wikidata Ids");
         console.log(sparqlQuery);
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-        queryDispatcher.query(sparqlQuery).then(data => {
-            //console.log(data.results.bindings);
-
-            // Map creation
-            document.querySelector("#mapDiv").classList.remove("cache");
-            let markers = [];
-            let latitude = [];
-            let longitude = [];
-
-            // Gallery and map creation
-            document.querySelector("#galleryDiv").classList.remove("cache");
-            document.querySelector("#galleryDiv").innerHTML = "<h2>Galerie</h2>"
-            + '<a id="peopleDownload" href="">Télécharger les données sur la galerie de personnes</a><br>';
-            
-            mapData.push(["wikidataId","label","link","image","lat","long"])
-            peopleData.push(["wikidataId","label","link","image"])
-            // Get wikidata info corresponding to geonames links
-            data.results.bindings.forEach(result => {
-                let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
-                //console.log(result)
-                label[wikidataId] = ""
-                if(result.itemLabel != undefined){
-                   label[wikidataId] = result.itemLabel.value
-                }
-                // if the wikidata element has a picture, save its infos for later
-                let picture = "";
-                if (result.picture != undefined) {
-                    if (!(wikidataId in wikidata)) {
-                        wikidata[wikidataId] = {};
-                        //console.log("ok" + wikidataId)
-                    }
-                    //console.log(wikidata)
-                    //console.log(wikidataId)
-                    //console.log(wikidata[wikidataId])
-                    wikidata[wikidataId].image = result.picture.value;
-                }
-
-                if("lemma" in result){
-                    wikidata[wikidataId].wikipedia = "http://fr.wikipedia.org/wiki/" + result.lemma.value;
+        queryDispatcher.query(sparqlQuery).then(
+            sampleData => {
+                console.log(data);
+                sampleData.results.bindings.forEach(info => {
+                    data.push(info);                    
+                })
+                console.log(data);
+                if(wikidataIds.length>0){
+                    setTimeout(getWikidataInfo, 200);
                 } else {
-                    wikidata[wikidataId].wikipedia = "http://www.wikidata.org/entity/" + wikidataId;
+                    buildMapAndGallery(data);
                 }
-                //wikipedia[result.lemma.value].wikidata = wikidataId;
-                
-                if (result.coordinates == null) {
-                    // Add element to the gallery of people
-                    if (result.picture != null) {
-                        document.querySelector("#galleryDiv").innerHTML+=" <a></a>";
-                        document.querySelector("#galleryDiv").lastElementChild.appendChild(document.createElement("img"));
-                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("href", wikidata[wikidataId].wikipedia);
-                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("target", "_blank");
-                        document.querySelector("#galleryDiv").lastElementChild.setAttribute("title", result.itemLabel.value);
-                        document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("src", result.picture.value);
-                        document.querySelector("#galleryDiv").lastElementChild.lastElementChild.setAttribute("alt", result.itemLabel.value);
-                        picture = result.picture.value;
-                    }
-                    peopleData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture]);
-                } else {
-                    // Add element to the map
-                    // Extract coordinates
-                    //console.log(result.coordinates.value);
-                    let coord = /Point\(([-]*[0-9]*[.][0-9]*) ([-]*[0-9]*[.][0-9]*)\)/i.exec(result.coordinates.value)
-                    if (("itemLabel" in result) && (coord != null) && (coord.length > 2)){
-                    if (("picture" in result)) {
-                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value, result.picture.value]);
-                        picture = result.picture.value;
-                    } else {
-                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
-                    }
-
-                    longitude.push(parseFloat(coord[1]));
-                    latitude.push(parseFloat(coord[2]));
-                    // Prepare the download of the data
-                    mapData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture, parseFloat(coord[2]), parseFloat(coord[1])]);
-                    }
-                }
-            })
-            // End of wikidata result processing
-            
-            // Add a download link for the gallery
-            document.querySelector("#peopleDownload").addEventListener("click",function(e){
-               // Download the table containing the results
-               e.preventDefault();
-               launchDownload(peopleData, "persName");
-            })
-
-
-            let medLat = 0;
-            let medLong = 0;
-            if(latitude.length >0){
-               medLat = median(latitude);
-               medLong = median(longitude);
-            }
-            
-            // Code in the block below from https://leafletjs.com/
-            var map = L.map('map').setView([medLat, medLong], 10);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            markers.forEach(m => {
-                //console.log(m)
-                let image = "";
-                if (m.length > 3) {
-                    image = `<img src="${m[3]}" alt="Image">`;
-                }
-                L.marker([m[1], m[0]]).addTo(map)
-                    .bindPopup(`<h3>${m[2]}</h3>${image}`);
-            })
-
-            // Display the text
-            document.querySelector("#textDiv").classList.remove("cache");
-            let texte = document.querySelector("text").innerHTML;
-
-            document.querySelector("#sourceHtml").remove();
-            document.querySelector("#textDiv").innerHTML = "<h2>Texte</h2>" + texte.replace(/"\/wiki/gi, "http://fr.wikisource.org/wiki").replace(/src="\/\/upload.wikimedia.org/gi, 'src="https://upload.wikimedia.org');
-            /*
-            document.querySelectorAll("orig").forEach(e=>{e.remove();})
-            document.querySelectorAll("sic").forEach(e=>{e.remove();})
-            document.querySelectorAll("expan").forEach(e=>{e.remove();})
-            */
-            document.querySelectorAll("date").forEach(e=>{e.setAttribute("title",e.getAttribute("when"));})
-            
-            
-            
-            
-            // Add tooltips to the text
-            document.querySelectorAll("persName,placeName,rs").forEach(e => {
-                let title = e.getAttribute("ref");
-                if((title != undefined) && (title.substring(0,4) == "wdt:")){
-                   let wikidataId = title.split(":")[1];
-                   e.outerHTML = '<a target="_blank" href="https://www.wikidata.org/wiki/'+wikidataId+'" title="'+label[wikidataId]+'">'+e.outerHTML+'</a>';
-                }
-                /*
-                if (title != null && title[1] == ":") {
-                    let name = title.substring(2);
-                    // Link to a Wikipedia page
-                    if (title[0] == "w") {
-                        if ((name in wikipedia) && (wikipedia[name].wikidata in wikidata)) {
-                            e.setAttribute("class", "tooltip");
-                            e.innerHTML = e.innerHTML + `<em><span></span><b>${name}</b><br><img src="${wikidata[wikipedia[name].wikidata].image}" alt="${name}"></em>`;
-                        }
-                    }
-                }
-                */
             });
 
-
-            
-            // Display the data
-            document.querySelector("#dataDiv").classList.remove("cache");
-            // Get all tags from the required field in the text
-            let field = document.querySelector("#field").value
-            document.querySelector("#dataDiv h2").innerHTML = "Données de la balise <tt>" + field + "</tt>";
-            
-            // First get all the possible attributes
-            let attributes = {};
-            document.querySelector("#textDiv").querySelectorAll(field).forEach(function(element){
-               element.getAttributeNames().forEach(function(a){
-                  if(!(a in attributes)){
-                     attributes[a] = "";
-                  }
-               })
-            })
-            console.log(attributes);
-            let tagData = [];
-            tagHTML = "";
-            attributeList = Object.keys(attributes)
-            tagData.push(["contenu de la balise"].concat(attributeList));
-            tagHTML += "<tr><th>contenu de la balise</th><th>"+attributeList.join("</th><th>")+"</th></tr>";
-            
-            charactersInFields = 0;
-            document.querySelector("#textDiv").querySelectorAll(field).forEach(function(element){
-               charactersInFields += element.innerText.length;
-               newTag = [element.innerHTML]
-               attributeList.forEach(function(a){
-                  if(element.getAttributeNames().includes(a)){
-                     newTag.push(element.getAttribute(a));
-                  } else {
-                     newTag.push("");
-                  }
-               })
-               tagData.push(newTag);
-               tagHTML += "<tr><td>"+newTag.join("</td><td>")+"</td></tr>";
-            })
-            document.querySelector("#dataDiv").innerHTML += "<table>" + tagHTML + "</table><p>Nombre de caractères dans le texte de la balise <tt>text</tt> : " + (document.querySelector("#textDiv").innerText.length-5) + "<br>Nombre de caractères dans le texte des balises <tt>" + field + "</tt> : " + charactersInFields + " (" + (Math.round(10000*charactersInFields/(document.querySelector("#textDiv").innerText.length-5))/100) + " %)</p>";
-            //console.log(tagData)
-            
-            // Download the table containing the data
-            document.querySelector("#dataDownload").addEventListener("click",function(e){
-               e.preventDefault();
-               launchDownload(tagData, field);
-            })
-            
-            
-            
-            
-            
-            
-
-        });
-
-
+        //}
     }
     //=================================================
 
@@ -1865,12 +1890,12 @@ SELECT ?viaf ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
             });
             console.log("List of Wikidata ids to search");
             console.log(wikidata);
-            buildMapAndGallery(wikidata)
-        });
-        //console.log(wikidata);
+            wikidataIds = Object.keys(wikidata);
+            getWikidataInfo();
+            //console.log(wikidata);
+        })
+        //=================================================
     }
-    //=================================================
-
 
 
 
@@ -1900,7 +1925,7 @@ SELECT ?idref ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                 //console.log(wikidataId)
             })
 
-            let viaf={};
+            let viaf = {};
             document.querySelectorAll("persName").forEach(e => {
                 let title = e.getAttribute("ref");
                 if (title != null && title.replace(":", "").length < title.length) {
@@ -1948,7 +1973,7 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                 //console.log(wikidataId)
             })
 
-            let idref={};
+            let idref = {};
             document.querySelectorAll("persName").forEach(e => {
                 let title = e.getAttribute("ref");
                 if (title != null && title.replace(":", "").length < title.length) {
@@ -1991,14 +2016,14 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
         document.querySelector("#preloader").classList.add("cache");
         document.querySelector("#source").classList.remove("cache");
         document.querySelector("#geocoder").classList.remove("cache");
-        
+
         // The user just clicked on the geocoding button
         document.querySelector("#geocoder").addEventListener("click", e => {
-            document.querySelector("#source").disabled=true;
+            document.querySelector("#source").disabled = true;
             mapData = [];
             peopleData = [];
 
-            document.querySelector("#sourceHtml").innerHTML = document.querySelector("#source").value.replace(/<head/g,"<h4").replace(/<\/head>/g,"</h4>").replace(/<titlePart/g,"<h3").replace(/<\/titlePart>/g,"</h3>");
+            document.querySelector("#sourceHtml").innerHTML = document.querySelector("#source").value.replace(/<head/g, "<h4").replace(/<\/head>/g, "</h4>").replace(/<titlePart/g, "<h3").replace(/<\/titlePart>/g, "</h3>");
             var geonames = {};
             var wikidata = {};
 
@@ -2019,29 +2044,29 @@ SELECT ?geonames ?lemma ?item ?itemLabel ?coordinates ?picture WHERE {
                         wikidata[name] = {};
                         //console.log(name)
                     }
-                    
+
                 }
             });
 
 
             // Get wikidata elements from geonames ids
             geonamesToWikidata(geonames, wikidata)
-            
+
 
         });
 
 
-// Download the table containing the results
-document.querySelector("#mapDownload").addEventListener("click",function(e){
-   e.preventDefault();
-   launchDownload(mapData, "placeName");
-})
+        // Download the table containing the results
+        document.querySelector("#mapDownload").addEventListener("click", function (e) {
+            e.preventDefault();
+            launchDownload(mapData, "placeName");
+        })
 
 
 
 
     });
-    
+
 </script>
 
 </html>
