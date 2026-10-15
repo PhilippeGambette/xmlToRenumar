@@ -15730,8 +15730,8 @@
         // Ajout dynamique des colonnes lat et long si on analyse les balises placeName (ou tout autre champ possédant des attributs de référence géographique)
         let attributeList = Object.keys(attributes);
         if (field === "placeName") {
-            if (!attributeList.includes("lat")) attributeList.push("lat");
             if (!attributeList.includes("long")) attributeList.push("long");
+            if (!attributeList.includes("lat")) attributeList.push("lat");
         }
 
         let tagData = [];
@@ -15760,13 +15760,13 @@
             attributeList.forEach(function (a) {
                 if (a === "lat") {
                     if (wikidataId && wikidataCoordinates[wikidataId] !== undefined) {
-                        newTag.push(wikidataCoordinates[wikidataId].lat);
+                        newTag.push(wikidataCoordinates[wikidataId].long);
                     } else {
                         newTag.push("");
                     }
                 } else if (a === "long") {
                     if (wikidataId && wikidataCoordinates[wikidataId] !== undefined) {
-                        newTag.push(wikidataCoordinates[wikidataId].long);
+                        newTag.push(wikidataCoordinates[wikidataId].lat);
                     } else {
                         newTag.push("");
                     }
