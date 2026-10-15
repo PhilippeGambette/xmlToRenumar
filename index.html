@@ -15574,7 +15574,7 @@
     /************************************/
 
 
-
+    // Part of this function (adding the geographical coordinates to the resulting table) was built by Gemini: https://share.gemini.google/Z0h3bkQAVLWp
     function buildMapAndGallery(data) {
         //console.log(data.results.bindings);
         let wikidata={};
@@ -15592,6 +15592,10 @@
 
         mapData.push(["wikidataId", "label", "link", "image", "lat", "long"])
         peopleData.push(["wikidataId", "label", "link", "image"])
+        
+        // Stockage temporaire des coordonnées associées à chaque identifiant Wikidata
+        let wikidataCoordinates = {};
+
         // Get wikidata info corresponding to geonames links
         data.forEach(result => {
             let wikidataId = /http:\/\/www.wikidata.org\/entity\/(.*)/i.exec(result.item.value)[1]
@@ -15609,10 +15613,6 @@
             // if the wikidata element has a picture, save its infos for later
             let picture = "";
             if (result.picture != undefined) {
-
-                //console.log(wikidata)
-                //console.log(wikidataId)
-                //console.log(wikidata[wikidataId])
                 wikidata[wikidataId].image = result.picture.value;
             }
 
@@ -15621,7 +15621,6 @@
             } else {
                 wikidata[wikidataId].wikipedia = "http://www.wikidata.org/entity/" + wikidataId;
             }
-            //wikipedia[result.lemma.value].wikidata = wikidataId;
 
             if (result.coordinates == null) {
                 // Add element to the gallery of people
@@ -15639,20 +15638,25 @@
             } else {
                 // Add element to the map
                 // Extract coordinates
-                //console.log(result.coordinates.value);
                 let coord = /Point\(([-]*[0-9]*[.][0-9]*) ([-]*[0-9]*[.][0-9]*)\)/i.exec(result.coordinates.value)
                 if (("itemLabel" in result) && (coord != null) && (coord.length > 2)) {
+                    let latVal = parseFloat(coord[1]);
+                    let longVal = parseFloat(coord[2]);
+                    
+                    // Enregistrer les coordonnées pour ce wikidataId
+                    wikidataCoordinates[wikidataId] = { lat: latVal, long: longVal };
+
                     if (("picture" in result)) {
-                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value, result.picture.value]);
+                        markers.push([latVal, longVal, result.itemLabel.value, result.picture.value]);
                         picture = result.picture.value;
                     } else {
-                        markers.push([parseFloat(coord[1]), parseFloat(coord[2]), result.itemLabel.value]);
+                        markers.push([latVal, longVal, result.itemLabel.value]);
                     }
 
-                    longitude.push(parseFloat(coord[1]));
-                    latitude.push(parseFloat(coord[2]));
+                    longitude.push(latVal);
+                    latitude.push(longVal);
                     // Prepare the download of the data
-                    mapData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture, parseFloat(coord[2]), parseFloat(coord[1])]);
+                    mapData.push([wikidataId, result.itemLabel.value, wikidata[wikidataId].wikipedia, picture, longVal, latVal]);
                 }
             }
         })
@@ -15681,7 +15685,6 @@
         }).addTo(map);
 
         markers.forEach(m => {
-            //console.log(m)
             let image = "";
             if (m.length > 3) {
                 image = `<img src="${m[3]}" alt="Image">`;
@@ -15696,15 +15699,8 @@
 
         document.querySelector("#sourceHtml").remove();
         document.querySelector("#textDiv").innerHTML = "<h2>Texte</h2>" + texte.replace(/"\/wiki/gi, "http://fr.wikisource.org/wiki").replace(/src="\/\/upload.wikimedia.org/gi, 'src="https://upload.wikimedia.org');
-        /*
-        document.querySelectorAll("orig").forEach(e=>{e.remove();})
-        document.querySelectorAll("sic").forEach(e=>{e.remove();})
-        document.querySelectorAll("expan").forEach(e=>{e.remove();})
-        */
+        
         document.querySelectorAll("date").forEach(e => { e.setAttribute("title", e.getAttribute("when")); })
-
-
-
 
         // Add tooltips to the text
         document.querySelectorAll("persName,placeName,rs").forEach(e => {
@@ -15713,21 +15709,7 @@
                 let wikidataId = title.split(":")[1];
                 e.outerHTML = '<a target="_blank" href="https://www.wikidata.org/wiki/' + wikidataId + '" title="' + label[wikidataId] + '">' + e.outerHTML + '</a>';
             }
-            /*
-            if (title != null && title[1] == ":") {
-                let name = title.substring(2);
-                // Link to a Wikipedia page
-                if (title[0] == "w") {
-                    if ((name in wikipedia) && (wikipedia[name].wikidata in wikidata)) {
-                        e.setAttribute("class", "tooltip");
-                        e.innerHTML = e.innerHTML + `<em><span></span><b>${name}</b><br><img src="${wikidata[wikipedia[name].wikidata].image}" alt="${name}"></em>`;
-                    }
-                }
-            }
-            */
         });
-
-
 
         // Display the data
         document.querySelector("#dataDiv").classList.remove("cache");
@@ -15735,7 +15717,7 @@
         let field = document.querySelector("#field").value
         document.querySelector("#dataDiv h2").innerHTML = "Données de la balise <tt>" + field + "</tt>";
 
-        // First get all the possible attributes
+        // First get all the possible attributes, plus lat and long if field is placeName
         let attributes = {};
         document.querySelector("#textDiv").querySelectorAll(field).forEach(function (element) {
             element.getAttributeNames().forEach(function (a) {
@@ -15743,38 +15725,72 @@
                     attributes[a] = "";
                 }
             })
-        })
-        console.log(attributes);
+        });
+
+        // Ajout dynamique des colonnes lat et long si on analyse les balises placeName (ou tout autre champ possédant des attributs de référence géographique)
+        let attributeList = Object.keys(attributes);
+        if (field === "placeName") {
+            if (!attributeList.includes("lat")) attributeList.push("lat");
+            if (!attributeList.includes("long")) attributeList.push("long");
+        }
+
         let tagData = [];
-        tagHTML = "";
-        attributeList = Object.keys(attributes)
+        let tagHTML = "";
         tagData.push(["contenu de la balise"].concat(attributeList));
         tagHTML += "<tr><th>contenu de la balise</th><th>" + attributeList.join("</th><th>") + "</th></tr>";
 
-        charactersInFields = 0;
+        let charactersInFields = 0;
         document.querySelector("#textDiv").querySelectorAll(field).forEach(function (element) {
             charactersInFields += element.innerText.length;
-            newTag = [element.innerHTML]
-            attributeList.forEach(function (a) {
-                if (element.getAttributeNames().includes(a)) {
-                    newTag.push(element.getAttribute(a));
-                } else {
-                    newTag.push("");
+            let newTag = [element.innerHTML];
+            
+            // Récupération de l'identifiant Wikidata depuis l'attribut ref (ex: "wdt:Q3038230" ou via l'élément HTML transformé)
+            let wikidataId = "";
+            let refAttr = element.getAttribute("ref");
+            if (refAttr && refAttr.startsWith("wdt:")) {
+                wikidataId = refAttr.split(":")[1];
+            } else {
+                // Si l'élément a été transformé en lien <a> par la boucle précédente
+                let refMatch = element.outerHTML.match(/wikidata\.org\/wiki\/(Q\d+)/);
+                if (refMatch) {
+                    wikidataId = refMatch[1];
                 }
-            })
+            }
+
+            attributeList.forEach(function (a) {
+                if (a === "lat") {
+                    if (wikidataId && wikidataCoordinates[wikidataId] !== undefined) {
+                        newTag.push(wikidataCoordinates[wikidataId].lat);
+                    } else {
+                        newTag.push("");
+                    }
+                } else if (a === "long") {
+                    if (wikidataId && wikidataCoordinates[wikidataId] !== undefined) {
+                        newTag.push(wikidataCoordinates[wikidataId].long);
+                    } else {
+                        newTag.push("");
+                    }
+                } else {
+                    if (element.getAttributeNames().includes(a)) {
+                        newTag.push(element.getAttribute(a));
+                    } else {
+                        newTag.push("");
+                    }
+                }
+            });
             tagData.push(newTag);
             tagHTML += "<tr><td>" + newTag.join("</td><td>") + "</td></tr>";
-        })
+        });
+        
         document.querySelector("#dataDiv").innerHTML += "<table>" + tagHTML + "</table><p>Nombre de caractères dans le texte de la balise <tt>text</tt> : " + (document.querySelector("#textDiv").innerText.length - 5) + "<br>Nombre de caractères dans le texte des balises <tt>" + field + "</tt> : " + charactersInFields + " (" + (Math.round(10000 * charactersInFields / (document.querySelector("#textDiv").innerText.length - 5)) / 100) + " %)</p>";
-        //console.log(tagData)
 
         // Download the table containing the data
         document.querySelector("#dataDownload").addEventListener("click", function (e) {
             e.preventDefault();
             launchDownload(tagData, field);
         })
-
     }
+
 
     //=================================================
     //Get information from the wikidata ids
